@@ -123,7 +123,7 @@ namespace DutyPlanner.Presentation.ViewModels
 
             var date = dialogVm.SelectedDate;
 
-            if (date.Year != date.Year || date.Month != Month)
+            if (date.Year != Year || date.Month != Month)
                 return;
 
             string fileName = $"{date.Day:00}-{date.DayOfWeek}.json";

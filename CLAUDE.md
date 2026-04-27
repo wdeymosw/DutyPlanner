@@ -20,45 +20,58 @@ DutyPlanner is a WPF desktop application (.NET 10 Windows) for managing duty sch
 
 ### Layer Structure
 
+The codebase has a clean architecture target with two legacy layers (`Models/`, `Services/`) that haven't been fully migrated yet:
+
 ```
-Models/           — Domain entities (User, YearMonth, MonthDescriptor) and DTOs
-Services/         — Service interfaces and implementations (user, month, statistics, export)
-Infrastrustures/  — Infrastructure: commands, file storage, localization, settings, messaging
-                    NOTE: folder name has a typo ("Infrastrustures" not "Infrastructure") — do not rename without a full grep/replace across ~25 files
-Presentation/     — ViewModels, Views (XAML), Windows, Converters, Behaviors, Resources
+Domain/               — Repository interfaces only (IUserRepository, IDayRepository)
+Application/          — Cross-cutting DTOs (MonthExportDto) and IFileLauncherService
+Infrastructure/       — Implementations: FileStorage, JsonFileStorage, Localization,
+                        Settings, MessageService, Persistence/Json/, Shell/
+Models/               — Legacy: domain entities (User, YearMonth, MonthDescriptor) and
+                        DTOs (DayUserDto, MonthStatisticsDto, etc.)
+Services/             — Legacy: UserService, DialogServices/, ReportServices/,
+                        Statistics/ (Excel + PDF export, month/year aggregates)
+Presentation/         — ViewModels, Views (XAML), Windows, Converters, Behaviors,
+                        Commands, Resources
 ```
+
+Migration target: move `Models/` into `Domain/`/`Application/` and `Services/` into `Application/Services/`.
+
+### DI Registration
+
+`App.xaml.cs` registers ~26 services. Infrastructure services are `Singleton`; dialog services and ViewModels are `Transient`. To add a new feature, register it there and inject via constructor. Switching from JSON to SQLite only requires:
+1. Implementing `SqliteUserRepository : IUserRepository` and `SqliteDayRepository : IDayRepository`
+2. Changing two lines in `App.xaml.cs`
 
 ### Data Persistence
 
 All data is stored as JSON files on disk:
-- `Data/Users/users.json` — user list
-- `Data/<YearMonth>/` — monthly schedule data in JSON files
+- `Data/Users/users.json` — user list (via `IUserRepository` / `JsonUserRepository`)
+- `Data/<YearMonth>/` — per-day JSON files (via `IDayRepository` / `JsonDayRepository`)
 
-`IJsonFileStorage<T>` in `Infrastrustures/JsonFileStorage/` is the intended abstraction for JSON I/O. The `Data/` directory and `settings.json` are gitignored.
+`IJsonFileStorage` in `Infrastructure/JsonFileStorage/` is the low-level JSON I/O abstraction. Both repository implementations wrap it. `IFileStorage` handles raw file operations. The `Data/` directory and `settings.json` are gitignored.
 
-### Known Architectural Issues (see REFACTORING_PLAN.md)
+`AppSettings` (`Infrastructure/Settings/`) persists language, data folder path, export folder, last-opened month, and whether to open exports automatically. `MonthManagementService` reads `settings.Current.DataFolderPath` on every call (not in constructor) to react to runtime path changes.
 
-A detailed refactoring roadmap exists at `REFACTORING_PLAN.md`. Key violations to be aware of when editing:
+### ViewModels and State
 
-- **DayViewModel** and **MonthPageViewModel** contain direct `File`/`Directory` I/O — should go through services
-- **DayUserDto** (in `Models/Dto/`) imports from `Presentation.ViewModels` — circular dependency
-- **UserService** uses `File.ReadAllText` directly instead of `IJsonFileStorage`
-- **IMonthReportService** / `PdfMonthReportService` accept a ViewModel as a parameter — violates layer separation
-- **MessageService** has hardcoded Russian strings instead of using `ILocalizationService`
-- **MonthDescriptor** (domain model) holds a `FolderPath` — file-system detail leaking into domain
+- `MainWindowsViewModel` — owns the `Pages` collection of `MonthPageViewModel` and all top-level commands.
+- `MonthPageViewModel` — one per loaded month; holds a collection of `DayViewModel`, dispatches through `IDayRepository`.
+- `DayViewModel` — one per day file; holds `ActiveUsers` / `ReserveUsers` as separate `ObservableCollection<DayUserViewModel>`. Saves asynchronously via `IDayRepository.SaveAsync`. Methods that call `SaveUsersAsync()` without try-catch (e.g., `AddFromSidebar`, `MoveUser`) are `async void` — handle exceptions carefully when modifying them.
+- `SidebarUsersViewModel` — left-panel user list; drag source for adding users to days.
 
-When adding new features, route file I/O through `IJsonFileStorage`/`IFileStorage` and avoid referencing `Presentation` from `Models` or `Services`.
+Commands use `LambdaCommand` / `CommandBase` from `Presentation/Commands/`. Drag-and-drop behavior is in `Presentation/Behaviors/`.
 
 ### Localization
 
-Three languages are supported: Russian (`ru`), Ukrainian (`uk`), English (`en`). Resource dictionaries live in `Presentation/Resources/`. English localization is incomplete (~7 of 45+ keys). Use `ILocalizationService` to retrieve strings; do not hardcode Russian text in services or infrastructure.
+Three languages: Russian (`ru`), Ukrainian (`uk`), English (`en`). Resource dictionaries live in `Presentation/Resources/Localization/`. `ILocalizationService` swaps dictionaries at runtime and broadcasts `LanguageChanged`. Access strings via `_localization["Key"]` — missing keys return `!Key!`. Do not hardcode Russian text in services or infrastructure; always use localization keys.
 
 ### Key Dependencies
 
 | Package | Purpose |
 |---|---|
-| `ClosedXML` | Excel export |
-| `QuestPDF` | PDF report generation |
+| `ClosedXML` | Excel export (`Services/Statistics/ExcelExportService`) |
+| `QuestPDF` | PDF report generation (`Services/ReportServices/PdfMonthReportService`) |
 | `FontAwesome5.WPF` | UI icons |
 | `Microsoft.Extensions.DependencyInjection` | DI container |
 | `Microsoft-WindowsAPICodePack-Shell` | Windows shell integration |

@@ -74,9 +74,6 @@ namespace DutyPlanner.Presentation.ViewModels
             var fileName = $"{Data.PeriodStart:yyyyMM}-{Data.PeriodEnd:yyyyMM}.xlsx";
             var filePath = Path.Combine(exportFolder, fileName);
 
-            var culture = new CultureInfo(_settings.Current.Language);
-
-
             try
             {
                 await _excelExportService.ExportYearStatisticsAsync(Data, filePath);

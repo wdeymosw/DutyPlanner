@@ -25,8 +25,7 @@ namespace DutyPlanner.Services
                 if (!TryParseDay(file, year, month, out var date))
                     continue;
 
-                var users = _storage
-                    .Load<List<DayUserDto>>(file)
+                var users = (_storage.Load<List<DayUserDto>>(file) ?? [])
                     .Where(u => u.Placement == DayUserPlacement.Active);
 
                 foreach (var u in users)

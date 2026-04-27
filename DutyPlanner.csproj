@@ -18,6 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="DutyPlanner.Tests\**" />
+    <None Remove="DutyPlanner.Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Presentation\Resources\Images\Logo.png" />
   </ItemGroup>
 
@@ -28,6 +33,10 @@
   </ItemGroup>
 
 
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="DutyPlanner.Tests" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.0" />
