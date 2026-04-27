@@ -54,7 +54,7 @@ namespace DutyPlanner.Presentation.ViewModels
             CloseCommand = new LambdaCommand(() => RequestClose?.Invoke(true));
         }
 
-        private void ExportExcel()
+        private async void ExportExcel()
         {
             var exportFolder = Path.Combine(
              AppContext.BaseDirectory,
@@ -70,7 +70,7 @@ namespace DutyPlanner.Presentation.ViewModels
 
             try
             {
-                _excelExportService.ExportMonthStatistics(Data, filePath);
+                await _excelExportService.ExportMonthStatisticsAsync(Data, filePath);
 
                 if (_settings.Current.OpenExcelAfterExport)
                     _fileLauncher.OpenIfExists(filePath);

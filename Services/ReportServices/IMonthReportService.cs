@@ -4,6 +4,6 @@ namespace DutyPlanner.Services
 {
     public interface IMonthReportService
     {
-        void ExportMonthPdf(MonthExportDto monthExport);
+        Task ExportMonthPdfAsync(MonthExportDto monthExport);
     }
 }

@@ -43,7 +43,7 @@ namespace DutyPlanner.Presentation.ViewModels
             FilePath = filePath;
             _dayRepository = dayRepository;
 
-            RemoveUserCommand = new LambdaCommand<DayUserViewModel>(RemoveUser);
+            RemoveUserCommand = new LambdaCommand<DayUserViewModel>(async user => await RemoveUserAsync(user));
 
             Load();
         }
@@ -63,7 +63,7 @@ namespace DutyPlanner.Presentation.ViewModels
             }
         }
 
-        private void AddFromSidebar(UserViewModel user, DayUserPlacement placement)
+        private async void AddFromSidebar(UserViewModel user, DayUserPlacement placement)
         {
             if (_users.Any(u => u.UserID == user.Id))
                 return;
@@ -80,11 +80,11 @@ namespace DutyPlanner.Presentation.ViewModels
             else
                 ReserveUsers.Add(vm);
 
-            SaveUsers();
+            await SaveUsersAsync();
         }
 
 
-        public void MoveUser(DayUserViewModel user, DayUserPlacement target)
+        public async void MoveUser(DayUserViewModel user, DayUserPlacement target)
         {
             if (user == null || user.Placement == target)
                 return;
@@ -102,11 +102,11 @@ namespace DutyPlanner.Presentation.ViewModels
             else
                 ReserveUsers.Add(user);
 
-            SaveUsers();
+            await SaveUsersAsync();
         }
 
 
-        private void RemoveUser(DayUserViewModel user)
+        private async Task RemoveUserAsync(DayUserViewModel user)
         {
             if (user == null)
                 return;
@@ -119,7 +119,7 @@ namespace DutyPlanner.Presentation.ViewModels
             ReserveUsers.Remove(user);
 
             // сохранить
-            SaveUsers();
+            await SaveUsersAsync();
         }
 
 
@@ -147,11 +147,9 @@ namespace DutyPlanner.Presentation.ViewModels
         }
 
         /// <summary>
-        /// Save user to storage
+        /// Save users to storage asynchronously
         /// </summary>
-        public void SaveUsers()
-        {
-            _dayRepository.Save(FilePath, _users.Select(u => u.ToDto()));
-        }
+        private Task SaveUsersAsync()
+            => _dayRepository.SaveAsync(FilePath, _users.Select(u => u.ToDto()));
     }
 }

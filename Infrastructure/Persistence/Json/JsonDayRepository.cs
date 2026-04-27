@@ -54,5 +54,16 @@ namespace DutyPlanner.Infrastructure.Persistence.Json
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
         }
+
+        public async Task<List<DayUserDto>> LoadAsync(string filePath)
+        {
+            if (!_storage.Exists(filePath))
+                return [];
+
+            return await _storage.LoadAsync<List<DayUserDto>>(filePath);
+        }
+
+        public Task SaveAsync(string filePath, IEnumerable<DayUserDto> users)
+            => _storage.SaveAsync(filePath, users.ToList());
     }
 }

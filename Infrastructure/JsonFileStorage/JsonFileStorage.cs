@@ -30,5 +30,23 @@ namespace DutyPlanner.Infrastructure.JsonFileStorage
             var json = JsonSerializer.Serialize(data, _options);
             File.WriteAllText(path, json);
         }
+
+        public async Task<T> LoadAsync<T>(string path)
+        {
+            if (!File.Exists(path)) throw new FileNotFoundException(path);
+
+            var json = await File.ReadAllTextAsync(path);
+            return JsonSerializer.Deserialize<T>(json)!;
+        }
+
+        public async Task SaveAsync<T>(string path, T data)
+        {
+            var directory = Path.GetDirectoryName(path);
+
+            if (!string.IsNullOrWhiteSpace(directory)) Directory.CreateDirectory(directory);
+
+            var json = JsonSerializer.Serialize(data, _options);
+            await File.WriteAllTextAsync(path, json);
+        }
     }
 }

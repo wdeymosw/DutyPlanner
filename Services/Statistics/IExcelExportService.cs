@@ -5,8 +5,8 @@ namespace DutyPlanner.Services
 {
     public interface IExcelExportService
     {
-        void ExportMonthStatistics(MonthStatisticsDto data, string filePath);
+        Task ExportMonthStatisticsAsync(MonthStatisticsDto data, string filePath);
 
-        void ExportYearStatistics(YearStatisticsDto data, string filePath);
+        Task ExportYearStatisticsAsync(YearStatisticsDto data, string filePath);
     }
 }

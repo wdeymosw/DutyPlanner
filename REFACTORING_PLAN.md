@@ -149,11 +149,11 @@ DutyPlanner/
 
 > Выполнять после стабилизации Фаз 1–4.
 
-- [ ] **5.1** `IJsonFileStorage` — добавить `LoadAsync<T>` / `SaveAsync<T>`
-- [ ] **5.2** `IDayRepository` — добавить `LoadDayAsync` / `SaveDayAsync`
-- [ ] **5.3** `DayViewModel.SaveUsers()` → `async Task SaveUsersAsync()`
-- [ ] **5.4** `ExcelExportService` → `Task ExportMonthStatisticsAsync(...)` / `Task ExportYearStatisticsAsync(...)`
-- [ ] **5.5** `PdfMonthReportService` → `Task ExportMonthPdfAsync(...)`
+- [x] **5.1** `IJsonFileStorage` — добавить `LoadAsync<T>` / `SaveAsync<T>`
+- [x] **5.2** `IDayRepository` — добавить `LoadDayAsync` / `SaveDayAsync`
+- [x] **5.3** `DayViewModel.SaveUsers()` → `async Task SaveUsersAsync()`
+- [x] **5.4** `ExcelExportService` → `Task ExportMonthStatisticsAsync(...)` / `Task ExportYearStatisticsAsync(...)`
+- [x] **5.5** `PdfMonthReportService` → `Task ExportMonthPdfAsync(...)`
 
 ### Фаза 6 — Полнота локализации (независимо от остального)
 

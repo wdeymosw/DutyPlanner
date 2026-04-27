@@ -228,7 +228,7 @@ namespace DutyPlanner.Presentation.ViewModels
 
 
         #region ExportPdf
-        private void ExportPdf()
+        private async void ExportPdf()
         {
             if (CurrentPage == null)
                 return;
@@ -248,7 +248,7 @@ namespace DutyPlanner.Presentation.ViewModels
 
             try
             {
-                _reportService.ExportMonthPdf(exportDto);
+                await _reportService.ExportMonthPdfAsync(exportDto);
 
                 _messageService.ShowInfo(
                     $"{_localization["Pdf_Successful_Preservation"]}",

@@ -11,5 +11,8 @@ namespace DutyPlanner.Domain.Repositories
         void Delete(string filePath);
         string[] GetDayFilePaths(string folderPath);
         void EnsureFolder(string folderPath);
+
+        Task<List<DayUserDto>> LoadAsync(string filePath);
+        Task SaveAsync(string filePath, IEnumerable<DayUserDto> users);
     }
 }

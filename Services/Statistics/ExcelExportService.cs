@@ -16,7 +16,10 @@ namespace DutyPlanner.Services
             _localization = localization;
         }
 
-        public void ExportMonthStatistics(MonthStatisticsDto data, string filePath)
+        public Task ExportMonthStatisticsAsync(MonthStatisticsDto data, string filePath)
+            => Task.Run(() => ExportMonthStatistics(data, filePath));
+
+        private void ExportMonthStatistics(MonthStatisticsDto data, string filePath)
         {
             
 
@@ -78,8 +81,10 @@ namespace DutyPlanner.Services
 
         // --- годовой экспорт уже обсуждали ---
 
+        public Task ExportYearStatisticsAsync(YearStatisticsDto data, string filePath)
+            => Task.Run(() => ExportYearStatistics(data, filePath));
 
-        public void ExportYearStatistics(YearStatisticsDto data, string filePath)
+        private void ExportYearStatistics(YearStatisticsDto data, string filePath)
         {
             using var workbook = new XLWorkbook();
             var ws = workbook.Worksheets.Add(

@@ -18,7 +18,10 @@ namespace DutyPlanner.Services
             _localization = localization;
         }
 
-        public void ExportMonthPdf(MonthExportDto monthExport)
+        public Task ExportMonthPdfAsync(MonthExportDto monthExport)
+            => Task.Run(() => ExportMonthPdf(monthExport));
+
+        private void ExportMonthPdf(MonthExportDto monthExport)
         {
             QuestPDF.Settings.License = LicenseType.Community;
 
