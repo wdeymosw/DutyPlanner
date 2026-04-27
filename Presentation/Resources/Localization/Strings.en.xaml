@@ -1,25 +1,55 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <!-- MainView -->
+    <sys:String x:Key="MainWindow_AddDay">+ Day</sys:String>
+    <sys:String x:Key="MainWindow_AddMonth">+ Month</sys:String>
 
     <!-- Common -->
     <sys:String x:Key="Common_Save">Save</sys:String>
     <sys:String x:Key="Common_Cancel">Cancel</sys:String>
+    <sys:String x:Key="Common_Close">Close</sys:String>
+    <sys:String x:Key="Common_Users">Name</sys:String>
+    <sys:String x:Key="Day_Active">Active</sys:String>
+    <sys:String x:Key="Day_Reserve">Reserve</sys:String>
 
-    <!-- Settings -->
-
-
+    <!-- Dialogs -->
+    <sys:String x:Key="Dialogs_Year">Year</sys:String>
+    <sys:String x:Key="Dialogs_Month">Month</sys:String>
+    <sys:String x:Key="Dialog_Month_Title">Add month</sys:String>
+    <sys:String x:Key="Dialog_AddDayDialog_Title">Add day</sys:String>
+    <sys:String x:Key="Dialogs_Total">Total</sys:String>
+    <sys:String x:Key="Dialogs_ToExel">To Excel</sys:String>
 
     <!-- Settings -->
     <sys:String x:Key="Settings_Title">Settings</sys:String>
     <sys:String x:Key="Settings_DataFolder">Data folder</sys:String>
-    <sys:String x:Key="Settings_Language">Languages</sys:String>
+    <sys:String x:Key="Settings_BrowseButton">Browse...</sys:String>
+    <sys:String x:Key="Settings_OpenPdfAfterExport">Open PDF after export</sys:String>
+    <sys:String x:Key="Settings_OpenExcelAfterExport">Open Excel after export</sys:String>
+    <sys:String x:Key="Settings_Language">Language</sys:String>
 
     <!-- Languages -->
     <sys:String x:Key="Language_ru">Русский</sys:String>
     <sys:String x:Key="Language_en">English</sys:String>
     <sys:String x:Key="Language_uk">Українська</sys:String>
+
+    <!-- Export -->
+    <sys:String x:Key="Export_PdfSuccess">PDF file saved successfully.</sys:String>
+    <sys:String x:Key="Export_Error">Export error</sys:String>
+
+    <!-- PDF -->
+    <sys:String x:Key="Pdf_String_1">Schedule</sys:String>
+    <sys:String x:Key="Pdf_String_2">Duty roster</sys:String>
+    <sys:String x:Key="Pdf_String_3">For</sys:String>
+    <sys:String x:Key="Pdf_Date">Date</sys:String>
+    <sys:String x:Key="Pdf_District">District</sys:String>
+    <sys:String x:Key="Pdf_FullName">Full name</sys:String>
+    <sys:String x:Key="Pdf_Reserve">Reserve</sys:String>
+    <sys:String x:Key="Pdf_Successful_Preservation">PDF file saved successfully in the month folder.</sys:String>
+    <sys:String x:Key="Pdf_ExportCompleted">Export completed</sys:String>
+    <sys:String x:Key="Pdf_Error_Export">Error creating PDF:</sys:String>
 
     <!-- Message dialogs -->
     <sys:String x:Key="Dialog_Confirm_Title">Confirm</sys:String>
@@ -27,5 +57,17 @@
     <sys:String x:Key="Dialog_Error_Title">Error</sys:String>
     <sys:String x:Key="MainWindow_ConfirmDeleteMonth">Delete month</sys:String>
     <sys:String x:Key="Settings_SelectFolder">Select data folder</sys:String>
+
+    <!-- Excel export -->
+    <sys:String x:Key="Statistic_For">Statistics for</sys:String>
+    <sys:String x:Key="Excel_Successful_Preservation">File exported successfully</sys:String>
+    <sys:String x:Key="Excel_ExportCompleted">Excel export</sys:String>
+    <sys:String x:Key="Exel_Error_Export">Failed to save file:</sys:String>
+    <sys:String x:Key="Exel_Error_Export_2">An error occurred during export.</sys:String>
+    <sys:String x:Key="Excel_Strign_1">Possible reasons:</sys:String>
+    <sys:String x:Key="Excel_Strign_2">• file is already open in Excel</sys:String>
+    <sys:String x:Key="Excel_Strign_3">• no write permissions</sys:String>
+    <sys:String x:Key="Excel_Strign_4">• disk unavailable</sys:String>
+    <sys:String x:Key="Excel_String_5">Close the file and try again.</sys:String>
 
 </ResourceDictionary>

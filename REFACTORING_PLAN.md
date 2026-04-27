@@ -157,10 +157,10 @@ DutyPlanner/
 
 ### Фаза 6 — Полнота локализации (независимо от остального)
 
-- [ ] **6.1** Расширить `LocalizationValidator` — проверять паритет ключей между языками
-- [ ] **6.2** Дополнить `Strings.en.xaml` с 7 до 45+ ключей
-- [ ] **6.3** Аудит `Strings.uk.xaml` на соответствие `Strings.ru.xaml`
-- [ ] **6.4** Добавить новые ключи из Фазы 2: `MainWindow_ConfirmDeleteMonth`, `Settings_SelectFolder`
+- [x] **6.1** Расширить `LocalizationValidator` — проверять паритет ключей между языками
+- [x] **6.2** Дополнить `Strings.en.xaml` с 13 до 50 ключей (полный паритет)
+- [x] **6.3** Аудит `Strings.uk.xaml` — паритет подтверждён, все 50 ключей присутствуют
+- [x] **6.4** Добавить новые ключи из Фазы 2: `MainWindow_ConfirmDeleteMonth`, `Settings_SelectFolder`
 
 ---
 

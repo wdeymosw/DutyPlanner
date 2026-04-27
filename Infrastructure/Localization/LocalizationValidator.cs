@@ -1,24 +1,47 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 
 namespace DutyPlanner.Infrastructure.Localization
 {
     internal static class LocalizationValidator
     {
+        private static readonly string[] Languages = ["ru", "en", "uk"];
+
         public static void Validate()
         {
-            foreach (var lang in new[] { "ru", "en", "uk" })
-            {
-                var uri =
-                    $"pack://application:,,,/Presentation/Resources/Localization/Strings.{lang}.xaml";
+            var dictionaries = Languages
+                .ToDictionary(lang => lang, LoadDictionary);
 
-                _ = new ResourceDictionary
+            var referenceKeys = dictionaries["ru"].Keys
+                .Cast<object>()
+                .Select(k => k.ToString()!)
+                .ToHashSet();
+
+            foreach (var lang in Languages.Where(l => l != "ru"))
+            {
+                var keys = dictionaries[lang].Keys
+                    .Cast<object>()
+                    .Select(k => k.ToString()!)
+                    .ToHashSet();
+
+                var missing = referenceKeys.Except(keys).OrderBy(k => k).ToList();
+
+                if (missing.Count > 0)
                 {
-                    Source = new Uri(uri, UriKind.Absolute)
-                };
+                    Debug.WriteLine(
+                        $"[LocalizationValidator] '{lang}' is missing {missing.Count} key(s):\n" +
+                        string.Join("\n", missing.Select(k => $"  • {k}")));
+                }
             }
+        }
+
+        private static ResourceDictionary LoadDictionary(string lang)
+        {
+            var uri = $"pack://application:,,,/Presentation/Resources/Localization/Strings.{lang}.xaml";
+            return new ResourceDictionary { Source = new Uri(uri, UriKind.Absolute) };
         }
     }
 }
