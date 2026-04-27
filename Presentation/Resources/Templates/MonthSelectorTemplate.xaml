@@ -1,0 +1,116 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fa5="http://schemas.fontawesome.com/icons/"
+                    xmlns:conv ="clr-namespace:DutyPlanner.Presentation.Converters">
+
+    <conv:CapitalizeConverter x:Key="CapitalizeConverter"/>
+
+    <DataTemplate x:Key="MonthSelectorTemplate">
+        <ItemsControl ItemsSource="{Binding Pages}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+   <!--Selected months bar-->
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    
+                    <!-- External border-->
+                    <Border x:Name="MonthValue"
+                            BorderBrush="{StaticResource BorderBrush}">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="0"/>
+                                <Setter Property="Background" Value="{StaticResource BackgroundBrushLight}"/>
+                                <Setter Property="Padding" Value="10 1" />
+                                <Setter Property="BorderThickness" Value="0 0 0 2"/>
+                                <Setter Property="BorderBrush" Value="LightGray"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Style.Triggers>
+
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background"  Value="{StaticResource BackgroudBrush}"/>
+                                        <Setter Property="CornerRadius" Value="5 5 0 0"/>
+                                    </Trigger>
+
+                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="BorderBrush" Value="{StaticResource BackgroudBrush}"/>
+                                        <Setter Property="BorderThickness" Value="2 2 2 0" />
+                                        <Setter Property="CornerRadius" Value="5 5 0 0"/>
+                                        <Setter Property="Margin" Value="1 0"/>
+                                    </DataTrigger>
+
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="20"/>
+                        </Grid.ColumnDefinitions>
+
+                            <Button x:Name="MonthName"
+                                    Content="{Binding MonthName, Converter={StaticResource CapitalizeConverter}}"                                    
+                                    Grid.Column="0"
+                                    Command="{Binding DataContext.SelectPageCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding}">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="Margin" Value="3"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                                        <Setter Property="Foreground" Value="{StaticResource ButtonFontColorBrush}"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <ContentPresenter RecognizesAccessKey="True"
+                                                                      VerticalAlignment="Center"
+                                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                                <Setter Property="Foreground" Value="{StaticResource FontBrush}"/>
+                                            </Trigger>
+                                        
+
+
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource FontBrush}"/>
+
+                                            </DataTrigger>
+
+
+                                        </Style.Triggers>
+
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+
+                            <Button x:Name="MonthRemove"
+                                    Content="✕"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Height="16"
+                                    Command="{Binding DataContext.RemoveMonthCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding}"
+                                    Style="{StaticResource MonthRemoveButton}" />
+
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DataTemplate>
+
+</ResourceDictionary>

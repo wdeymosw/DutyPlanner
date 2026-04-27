@@ -1,0 +1,158 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:beh="clr-namespace:DutyPlanner.Presentation.Behaviors">
+
+
+    <DataTemplate x:Key="DayTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <!-- Date -->
+                <ColumnDefinition Width="*"/>
+                <!-- Active Users -->
+                <ColumnDefinition Width="*"/>
+                <!-- Reserve Users -->
+            </Grid.ColumnDefinitions>
+
+            <Border Background="{StaticResource WindowShadowBrush}"
+                    CornerRadius="8 0 0 8"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="2 1 1 2"
+                    Margin="3">
+                <Grid>
+                    <Border CornerRadius="8"
+                            Background="{StaticResource BackgroundBrushLight}">
+
+                        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock  Language="{Binding DataContext.CalendarLanguage, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                        FontWeight="Bold" 
+                                        TextAlignment="Center" >
+                                
+                                <Run Text="{Binding Date, StringFormat='dd', Mode=OneWay}" FontSize="24"/>
+                                <LineBreak/>
+                                <Run Text="{Binding Date, StringFormat='dddd', Mode=OneWay}"/>
+                                <LineBreak/>
+
+
+                            </TextBlock>
+                            <Button Content="✕"
+                                        Style="{StaticResource PrimaryRevmoveSyle}"
+                                        Width="50" Height="25" Margin="5,0,0,0"
+                                        Command="{Binding DataContext.RemoveDayCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"/>
+                        </StackPanel>
+
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Active Users -->
+
+            <Border Grid.Column="1"
+                Background="{StaticResource WindowShadowBrush}"
+                    CornerRadius="0"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="0 1 0 2"
+                    Margin="3">
+                <Grid>
+                    <Border CornerRadius="0"
+                            Background="{StaticResource BackgroundBrushLight}">
+                        <StackPanel >
+                            <TextBlock Text="{DynamicResource Day_Active}" FontWeight="SemiBold" Margin="15,5,2,5"/>
+                            <ListBox ItemsSource="{Binding ActiveUsers}"
+                                         AllowDrop="True"
+                                         Tag="Active"
+                                         beh:DragTargetBehavior.IsEnabled="True"
+                                         beh:DragSourceBehavior.IsEnabled="True"
+                                         MinHeight="120"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="5">
+                                            <TextBlock Text="{Binding Name}" 
+                                                       Width="Auto"
+                                                       Padding="2"/>
+                                            <TextBox Text="{Binding Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     Padding="2"
+                                                     Width="20"
+                                                     Height="Auto"
+                                                     HorizontalContentAlignment="Center"
+                                                     VerticalContentAlignment="Center"/>
+                                            <Button Content="✕"
+                                                    Style="{StaticResource PrimaryRevmoveSyle}"
+                                                    FontSize="8"
+                                                    Width="20"
+                                                    Height="Auto"
+                                                    Command="{Binding DataContext.RemoveUserCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                    CommandParameter="{Binding}" 
+                                                    Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Reserve Users -->
+
+            <Border Grid.Column="2"
+                    Background="{StaticResource WindowShadowBrush}"
+                    CornerRadius="0 8 8 0"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="0 1 2 2"
+                    Margin="3">
+                <Grid>
+                    <Border CornerRadius="8"
+                            Background="{StaticResource BackgroundBrushLight}">
+
+
+                        <StackPanel >
+                            <TextBlock Text="{DynamicResource Day_Reserve}" FontWeight="SemiBold" Margin="15,5,2,5"/>
+                            <ListBox ItemsSource="{Binding ReserveUsers}"
+                                         AllowDrop="True"
+                                         Tag="Reserve"
+                                         beh:DragTargetBehavior.IsEnabled="True"
+                                         beh:DragSourceBehavior.IsEnabled="True"
+                                         MinHeight="120"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="5">
+                                            <TextBlock Text="{Binding Name}" 
+                                                       Width="Auto"
+
+                                                       Padding="2"/>
+                                            <TextBox Text="{Binding Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                     Width="20"
+                                                     Height="Auto"
+                                                     HorizontalContentAlignment="Center"
+                                                     VerticalContentAlignment="Center"/>
+                                            <Button Content="✕"
+                                                    FontSize="8"
+                                                    Style="{StaticResource PrimaryRevmoveSyle}"
+                                                    Width="20"
+                                                    Height="Auto"
+                                                    Command="{Binding DataContext.RemoveUserCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                    CommandParameter="{Binding}" 
+                                                    Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+                    
+
+
+
+
+
+    </DataTemplate>
+
+</ResourceDictionary>

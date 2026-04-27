@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+
+    <!-- Common -->
+    <sys:String x:Key="Common_Save">Save</sys:String>
+    <sys:String x:Key="Common_Cancel">Cancel</sys:String>
+
+    <!-- Settings -->
+
+
+
+    <!-- Settings -->
+    <sys:String x:Key="Settings_Title">Settings</sys:String>
+    <sys:String x:Key="Settings_DataFolder">Data folder</sys:String>
+    <sys:String x:Key="Settings_Language">Languages</sys:String>
+
+    <!-- Languages -->
+    <sys:String x:Key="Language_ru">Русский</sys:String>
+    <sys:String x:Key="Language_en">English</sys:String>
+    <sys:String x:Key="Language_uk">Українська</sys:String>
+
+ 
+
+</ResourceDictionary>

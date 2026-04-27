@@ -1,0 +1,70 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    
+    <!-- MianView-->
+    <sys:String x:Key="MainWindow_AddDay">+ День</sys:String>
+    <sys:String x:Key="MainWindow_AddMonth">+ Месяц</sys:String>
+
+    <!-- Common -->
+    <sys:String x:Key="Common_Save">Сохранить</sys:String>
+    <sys:String x:Key="Common_Cancel">Отмена</sys:String>
+    <sys:String x:Key="Common_Close">Закрыть</sys:String>
+    <sys:String x:Key="Common_Users">Ф.И.О.</sys:String>
+    <sys:String x:Key="Day_Active">Актив</sys:String>
+    <sys:String x:Key="Day_Reserve">Резерв</sys:String>
+    
+    
+    <!--Dialogs -->
+    <sys:String x:Key="Dialogs_Year">Год</sys:String>
+    <sys:String x:Key="Dialogs_Month">Месяц</sys:String>
+    <sys:String x:Key="Dialog_Month_Title">Добавить месяц</sys:String>
+    <sys:String x:Key="Dialog_AddDayDialog_Title">Добавить день</sys:String>
+    <sys:String x:Key="Dialogs_Total">Сумма</sys:String>
+    <sys:String x:Key="Dialogs_ToExel">В Exel</sys:String>
+
+    <!-- Settings -->
+    <sys:String x:Key="Settings_Title">Настройки</sys:String>
+    <sys:String x:Key="Settings_DataFolder">Папка данных</sys:String>
+    <sys:String x:Key="Settings_BrowseButton">Выбрать...</sys:String>
+    <sys:String x:Key="Settings_OpenPdfAfterExport">Открывать PDF после экспорта</sys:String>
+    <sys:String x:Key="Settings_OpenExcelAfterExport">Открывать Excel после экспорта</sys:String>
+
+    <!-- Export -->
+    <sys:String x:Key="Export_PdfSuccess">PDF-файл успешно сохранён.</sys:String>
+    <sys:String x:Key="Export_Error">Ошибка экспорта</sys:String>
+
+    <sys:String x:Key="Settings_Language">Язык</sys:String>
+    <sys:String x:Key="Language_ru">Русский</sys:String>
+    <sys:String x:Key="Language_en">English</sys:String>
+    <sys:String x:Key="Language_uk">Українська</sys:String>
+    
+    <!-- Pdf-->
+    <sys:String x:Key="Pdf_String_1">План-грфик</sys:String>
+    <sys:String x:Key="Pdf_String_2">По ростановке нарядов ГФ з ОГП г.Пивденноукраинска</sys:String>
+    <sys:String x:Key="Pdf_String_3">На</sys:String>
+    <sys:String x:Key="Pdf_Date">Дата</sys:String>
+    <sys:String x:Key="Pdf_District">Район</sys:String>
+    <sys:String x:Key="Pdf_FullName">Ф.И.О</sys:String>
+    <sys:String x:Key="Pdf_Reserve">Резерв</sys:String>
+    
+    <sys:String x:Key="Pdf_Successful_Preservation">PDF-файл успешно сохранён в папке месяца.</sys:String>
+    <sys:String x:Key="Pdf_ExportCompleted">Экспорт завершён</sys:String>
+    <sys:String x:Key="Pdf_Error_Export">Ошибка при создании PDF:</sys:String>
+
+    <!-- Exel export-->
+    <sys:String x:Key="Statistic_For">Статистика за</sys:String>
+    <sys:String x:Key="Excel_Successful_Preservation">Файл успешно экспортирован</sys:String>
+    <sys:String x:Key="Excel_ExportCompleted">Експорт в Excel</sys:String>
+    <sys:String x:Key="Exel_Error_Export">Не удалось сохранить файл:</sys:String>
+    <sys:String x:Key="Exel_Error_Export_2">Произошла ошибка при экспорте.</sys:String>
+
+    <sys:String x:Key="Excel_Strign_1">Возможные причины:</sys:String>
+    <sys:String x:Key="Excel_Strign_2">• файл уже открыт в Excel</sys:String>
+    <sys:String x:Key="Excel_Strign_3">• нет прав на запись</sys:String>
+    <sys:String x:Key="Excel_Strign_4">• диск недоступен</sys:String>
+    <sys:String x:Key="Excel_String_5">Закройте файл и попробуйте снова.</sys:String>
+
+
+</ResourceDictionary>

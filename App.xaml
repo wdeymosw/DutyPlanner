@@ -1,0 +1,60 @@
+﻿<Application x:Class="DutyPlanner.App"
+             
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DutyPlanner"
+             xmlns:vm="clr-namespace:DutyPlanner.Presentation.ViewModels"
+             xmlns:view="clr-namespace:DutyPlanner.Presentation.Views"
+             xmlns:conv ="clr-namespace:DutyPlanner.Presentation.Converters">
+
+
+    <Application.Resources>
+        <ResourceDictionary>
+            
+            
+            
+            
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Styles -->
+                <ResourceDictionary Source="/Presentation/Resources/Color.xaml"/>
+                <ResourceDictionary Source="/Presentation/Resources/Styles/Buttons.xaml"/>
+                <ResourceDictionary Source="/Presentation/Resources/Styles/Breadcrumbs.xaml"/>
+                <ResourceDictionary Source="/Presentation/Resources/Styles/WindowStyles.xaml"/>
+
+                
+                
+                <!-- Templates-->
+
+                <ResourceDictionary Source="/Presentation/Resources/Templates/BreadcrumbTemplate.xaml"/>
+                <ResourceDictionary Source="/Presentation/Resources/Templates/MonthSelectorTemplate.xaml"/>
+                <ResourceDictionary Source="/Presentation/Resources/Templates/DayTemplate.xaml"/>
+
+
+                <!-- Localization -->
+                <ResourceDictionary Source="/Presentation/Resources/Localization/Strings.en.xaml"/>
+                <ResourceDictionary Source="/Presentation/Resources/Localization/Strings.ru.xaml"/>
+                <ResourceDictionary Source="/Presentation/Resources/Localization/Strings.uk.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Data Templates to map ViewModels to Views -->
+            <DataTemplate DataType="{x:Type vm:SidebarUsersViewModel}">
+                <view:SidebarUsersView/>
+            </DataTemplate>
+            
+
+
+            <!-- Converters -->
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+            <conv:BoolToVisibilityInverseConverter x:Key="BoolToVisibilityInverse" />
+            <conv:MonthValueConverter x:Key="MonthValueConverter"/>
+            <conv:LanguageToBoolConverter x:Key="LanguageToBoolConverter"/>
+            <conv:CapitalizeConverter x:Key="CapitalizeConverter"/>
+            <conv:MonthToNameConverter x:Key="MonthToNameConverter"/>
+
+
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>

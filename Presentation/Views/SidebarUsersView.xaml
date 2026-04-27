@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="DutyPlanner.Presentation.Views.SidebarUsersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:beh="clr-namespace:DutyPlanner.Presentation.Behaviors"
+             xmlns:views="clr-namespace:DutyPlanner.Presentation.Views"
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="300">
+
+    <Grid>
+
+        <!-- Основная разметка -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ===== БЛОК СО СПИСКОМ ===== -->
+        <Border Grid.Row="0"
+            Margin="3"
+            Background="{StaticResource WindowShadowBrush}"
+            CornerRadius="8"
+            BorderBrush="{StaticResource BorderBrush}"
+            BorderThickness="2">
+
+            <Border Background="{StaticResource BackgroundBrushLight}"
+                CornerRadius="8"
+                Padding="10">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовок -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <fa5:FontAwesome Grid.Column="0"
+                                     Icon="Solid_Users"
+                                     FontSize="18"
+                                     Margin="6 2"/>
+
+                        <TextBlock Grid.Column="1"
+                               Text="Members"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Users List from viewTemplate-->
+                    <views:SidebarUsersListView Grid.Row="1"/>
+                </Grid>
+
+            </Border>
+        </Border>
+
+        <!-- ===== Add User block ===== -->
+        <Border Grid.Row="1"
+            Margin="3"
+            Background="{StaticResource WindowShadowBrush}"
+            CornerRadius="8"
+            BorderBrush="{StaticResource BorderBrush}"
+            BorderThickness="2">
+
+            <Border Background="{StaticResource BackgroundBrushLight}"
+                CornerRadius="8"
+                Padding="6">
+
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <fa5:FontAwesome Grid.Column="0"
+                                 Icon="Solid_ArrowAltCircleRight"
+                                 FontSize="16"
+                                 Margin="5 2"/>
+
+                    <TextBox Grid.Column="1"
+                         Margin="5 0"
+                         Text="{Binding NewUserName,
+                                UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button Grid.Column="2"
+                        Content="Add"
+                        Margin="6,0,0,0"
+                        Command="{Binding AddUserCommand}" />
+                </Grid>
+
+            </Border>
+        </Border>
+    </Grid>
+
+</UserControl>
