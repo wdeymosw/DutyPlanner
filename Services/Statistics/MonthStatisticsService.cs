@@ -96,20 +96,6 @@ namespace DutyPlanner.Services
                 return false;
             }
         }
-
-
-
-        private static IEnumerable<(int Year, int Month)> EnumerateMonths(DateTime start, DateTime end)
-        {
-            var current = new DateTime(start.Year, start.Month, 1);
-            var last = new DateTime(end.Year, end.Month, 1);
-
-            while (current <= last)
-            {
-                yield return (current.Year, current.Month);
-                current = current.AddMonths(1);
-            }
-        }
     }
 
 }

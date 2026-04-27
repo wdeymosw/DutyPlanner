@@ -7,7 +7,7 @@
 
 ## Фаза 1 — Баги (1–3 строки, нулевой риск)
 
-- [ ] **1.1** `MonthPageViewModel.cs:126` — тавтология в валидации даты
+- [x] **1.1** `MonthPageViewModel.cs:126` — тавтология в валидации даты
   ```csharp
   // было:
   if (date.Year != date.Year || date.Month != Month)
@@ -15,7 +15,7 @@
   if (date.Year != Year || date.Month != Month)
   ```
 
-- [ ] **1.2** `MonthStatisticsService.cs:29` — защита от `null` при загрузке файла
+- [x] **1.2** `MonthStatisticsService.cs:29` — защита от `null` при загрузке файла
   ```csharp
   // было:
   var users = _storage.Load<List<DayUserDto>>(file)
@@ -23,7 +23,7 @@
   var users = (_storage.Load<List<DayUserDto>>(file) ?? [])
   ```
 
-- [ ] **1.3** `YearStatisticsViewModel.cs:77` — удалить неиспользуемую переменную
+- [x] **1.3** `YearStatisticsViewModel.cs:77` — удалить неиспользуемую переменную
   ```csharp
   // удалить строку:
   var culture = new CultureInfo(_settings.Current.Language);
@@ -35,7 +35,7 @@
 
 > `MonthStatisticsViewModel` уже использует ключи. `YearStatisticsViewModel` регрессировал к хардкоду.
 
-- [ ] **2.1** `YearStatisticsViewModel.cs:88–106` — заменить все строки на ключи локализации
+- [x] **2.1** `YearStatisticsViewModel.cs:88–106` — заменить все строки на ключи локализации
 
   | Хардкод | Ключ |
   |---|---|
@@ -53,15 +53,15 @@
 
 ## Фаза 3 — Удаление мёртвого кода
 
-- [ ] **3.1** Удалить `Services/Statistics/FileLauncher.cs` целиком
+- [x] **3.1** Удалить `Services/Statistics/FileLauncher.cs` целиком
   — Полный дубликат `Infrastructure/Shell/FileLauncherService.cs`, нигде не вызывается.
 
-- [ ] **3.2** `YearStatisticsService.cs:21–68` — удалить закомментированный метод `BuildYear`
+- [x] **3.2** `YearStatisticsService.cs:21–68` — удалить закомментированный метод `BuildYear`
 
-- [ ] **3.3** `ExcelExportService.cs:150–152` — удалить приватный метод `MonthName(int month)`
+- [x] **3.3** `ExcelExportService.cs:150–152` — удалить приватный метод `MonthName(int month)`
   — Нигде не вызывается.
 
-- [ ] **3.4** `MonthStatisticsService.cs:103–113` — удалить приватный метод `EnumerateMonths`
+- [x] **3.4** `MonthStatisticsService.cs:103–113` — удалить приватный метод `EnumerateMonths`
   — Нигде не вызывается (только в `YearStatisticsService`, там свой экземпляр).
 
 ---

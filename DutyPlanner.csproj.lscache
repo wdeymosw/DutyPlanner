@@ -174,7 +174,6 @@ Services/
   PdfMonthReportService.cs
  Statistics/
   ExcelExportService.cs
-  FileLauncher.cs
   IExcelExportService.cs
   IMonthStatisticsService.cs
   IYearPeriodService.cs

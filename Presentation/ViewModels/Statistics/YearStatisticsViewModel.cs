@@ -82,25 +82,25 @@ namespace DutyPlanner.Presentation.ViewModels
                     _fileLauncher.OpenIfExists(filePath);
 
                 _messages.ShowInfo(
-                    "Файл успешно экспортирован.",
-                    "Экспорт в Excel");
+                    _localization["Excel_Successful_Preservation"],
+                    _localization["Excel_ExportCompleted"]);
             }
             catch (IOException)
             {
                 _messages.ShowError(
-                    "Не удалось сохранить файл.\n\n" +
-                    "Возможные причины:\n" +
-                    "• файл уже открыт в Excel\n" +
-                    "• нет прав на запись\n" +
-                    "• диск недоступен\n\n" +
-                    "Закройте файл и попробуйте снова.",
-                    "Экспорт в Excel");
+                    $"{_localization["Exel_Error_Export"]}\n\n" +
+                    $"{_localization["Excel_Strign_1"]}\n" +
+                    $"{_localization["Excel_Strign_2"]}\n" +
+                    $"{_localization["Excel_Strign_3"]}\n" +
+                    $"{_localization["Excel_Strign_4"]}\n\n" +
+                    _localization["Excel_String_5"],
+                    _localization["Excel_ExportCompleted"]);
             }
             catch (Exception ex)
             {
                 _messages.ShowError(
-                    "Произошла ошибка при экспорте.\n\n" + ex.Message,
-                    "Экспорт в Excel");
+                    $"{_localization["Exel_Error_Export_2"]}\n\n" + ex.Message,
+                    _localization["Excel_ExportCompleted"]);
             }
         }
     }

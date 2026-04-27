@@ -146,9 +146,6 @@ namespace DutyPlanner.Services
 
             workbook.SaveAs(filePath);
         }
-
-        private static string MonthName(int month)
-            => new DateTime(2000, month, 1).ToString("MMMM");
     }
 }
 

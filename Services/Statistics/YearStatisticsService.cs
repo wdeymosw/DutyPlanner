@@ -18,56 +18,6 @@ namespace DutyPlanner.Services
         _monthManagement = monthManagement;
     }
 
-        /* public YearStatisticsDto BuildYear(int year)
-         {
-             // userName → row
-             var users = _userService.GetAll();
-
-             var rows = users.ToDictionary(
-                 u => u.Id,
-                 u => new YearStatisticsRowDto
-                 {
-                     UserId = u.Id,
-                     UserName = u.Name
-                 });
-
-             // 2️⃣ Существующие месяцы
-             var months = _monthManagement.LoadExistingMonths()
-                 .Where(m => m.Year == year)
-                 .OrderBy(m => m.Month)
-                 .ToList();
-
-             foreach (var month in months)
-             {
-                 var monthDto = _monthStatistics.BuildMonth(
-                     month.Year,
-                     month.Month,
-                     month.FolderPath);
-
-                 foreach (var monthRow in monthDto.Rows)
-                 {
-                     // здесь row ГАРАНТИРОВАННО существует
-                     rows[monthRow.UserId]
-                         .HoursByMonth[month.Month] = monthRow.TotalHours;
-                 }
-             }
-
-             // 3️⃣ Гарантируем 12 месяцев
-             foreach (var row in rows.Values)
-                 for (int m = 1; m <= 12; m++)
-                     row.HoursByMonth.TryAdd(m, 0);
-
-             return new YearStatisticsDto
-             {
-                 Year = year,
-                 Months = Enumerable.Range(1, 12).ToList(),
-                 Rows = rows.Values
-                     .OrderBy(r => r.UserName)
-                     .ToList()
-             };
-         } */
-
-
         public YearStatisticsDto BuildPeriod(DateTime start, DateTime end)
         {
             var rows = _userService.GetAll()
