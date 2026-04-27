@@ -1,5 +1,5 @@
 ﻿using ClosedXML.Excel;
-using DutyPlanner.Infrastrustures.Localization;
+using DutyPlanner.Infrastructure.Localization;
 using DutyPlanner.Models;
 using DutyPlanner.Models.Dto;
 using System.Globalization;

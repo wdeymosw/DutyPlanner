@@ -8,11 +8,11 @@ using DutyPlanner.Infrastructure.Shell;
 using DutyPlanner.Presentation.ViewModels;
 using DutyPlanner.Presentation.Windows;
 using DutyPlanner.Services;
-using DutyPlanner.Infrastrustures.Localization;
-using DutyPlanner.Infrastrustures.Settings;
-using DutyPlanner.Infrastrustures.MessageService;
-using DutyPlanner.Infrastrustures.FileStorage;
-using DutyPlanner.Infrastrustures.JsonFileStorage;
+using DutyPlanner.Infrastructure.Localization;
+using DutyPlanner.Infrastructure.Settings;
+using DutyPlanner.Infrastructure.MessageService;
+using DutyPlanner.Infrastructure.FileStorage;
+using DutyPlanner.Infrastructure.JsonFileStorage;
 using DutyPlanner.Services.Statistics;
 
 namespace DutyPlanner

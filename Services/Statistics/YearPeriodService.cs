@@ -1,4 +1,4 @@
-﻿using DutyPlanner.Infrastrustures.Settings;
+﻿using DutyPlanner.Infrastructure.Settings;
 using System;
 using System.Collections.Generic;
 using System.Text;

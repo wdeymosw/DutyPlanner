@@ -1,4 +1,4 @@
-﻿using DutyPlanner.Infrastrustures.Settings;
+﻿using DutyPlanner.Infrastructure.Settings;
 using DutyPlanner.Models;
 using System.Globalization;
 using System.IO;

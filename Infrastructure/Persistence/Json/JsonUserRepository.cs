@@ -1,5 +1,5 @@
 using DutyPlanner.Domain.Repositories;
-using DutyPlanner.Infrastrustures.JsonFileStorage;
+using DutyPlanner.Infrastructure.JsonFileStorage;
 using DutyPlanner.Models;
 using System.IO;
 

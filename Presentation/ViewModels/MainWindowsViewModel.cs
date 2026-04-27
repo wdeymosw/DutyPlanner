@@ -1,9 +1,9 @@
 ﻿using DutyPlanner.Application.DTOs;
 using DutyPlanner.Domain.Repositories;
-using DutyPlanner.Infrastrustures;
-using DutyPlanner.Infrastrustures.Localization;
-using DutyPlanner.Infrastrustures.MessageService;
-using DutyPlanner.Infrastrustures.Settings;
+using DutyPlanner.Presentation.Commands;
+using DutyPlanner.Infrastructure.Localization;
+using DutyPlanner.Infrastructure.MessageService;
+using DutyPlanner.Infrastructure.Settings;
 using DutyPlanner.Services;
 using DutyPlanner.Services.Statistics;
 using System.Collections.ObjectModel;

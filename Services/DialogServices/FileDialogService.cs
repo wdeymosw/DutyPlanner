@@ -1,4 +1,4 @@
-using DutyPlanner.Infrastrustures.Localization;
+using DutyPlanner.Infrastructure.Localization;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DutyPlanner.Services

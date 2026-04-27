@@ -1,5 +1,5 @@
 using DutyPlanner.Application.DTOs;
-using DutyPlanner.Infrastrustures.Localization;
+using DutyPlanner.Infrastructure.Localization;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;

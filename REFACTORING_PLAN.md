@@ -135,10 +135,10 @@ DutyPlanner/
 
 > **Важно:** все ~25 файлов переименовываются в одном коммите, иначе билд сломан.
 
-- [ ] **3.1** Переименовать папку `Infrastrustures/` → `Infrastructure/`
-- [ ] **3.2** Заменить все `namespace DutyPlanner.Infrastrustures` → `DutyPlanner.Infrastructure`
-- [ ] **3.3** Заменить все `using DutyPlanner.Infrastrustures` → `using DutyPlanner.Infrastructure`
-- [ ] **3.4** Переместить `Commands/` из `Infrastructure/` в `Presentation/Commands/`
+- [x] **3.1** Переименовать папку `Infrastrustures/` → `Infrastructure/`
+- [x] **3.2** Заменить все `namespace DutyPlanner.Infrastrustures` → `DutyPlanner.Infrastructure`
+- [x] **3.3** Заменить все `using DutyPlanner.Infrastrustures` → `using DutyPlanner.Infrastructure`
+- [x] **3.4** Переместить `Commands/` из `Infrastructure/` в `Presentation/Commands/`
 
 ### Фаза 4 — Подготовка к SQLite
 

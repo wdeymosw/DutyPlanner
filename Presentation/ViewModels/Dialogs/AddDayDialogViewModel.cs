@@ -1,5 +1,5 @@
-﻿using DutyPlanner.Infrastrustures;
-using DutyPlanner.Infrastrustures.Localization;
+﻿using DutyPlanner.Presentation.Commands;
+using DutyPlanner.Infrastructure.Localization;
 using DutyPlanner.Presentation.ViewModels.Base;
 using DutyPlanner.Services;
 
