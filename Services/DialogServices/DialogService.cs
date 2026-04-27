@@ -108,7 +108,7 @@ namespace DutyPlanner.Services
         {
             var dialog = ActivatorUtilities.CreateInstance<TDialog>(_services);
             dialog.DataContext = viewModel;
-            dialog.Owner = Application.Current.MainWindow;
+            dialog.Owner = System.Windows.Application.Current.MainWindow;
             dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             return dialog;
         }

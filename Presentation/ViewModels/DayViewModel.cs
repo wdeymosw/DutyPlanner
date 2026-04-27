@@ -74,7 +74,7 @@ namespace DutyPlanner.Presentation.ViewModels
             if (_users.Any(u => u.UserID == user.Id))
                 return;
 
-            var vm = new DayUserViewModel(new DayUserDto(user))
+            var vm = new DayUserViewModel(new DayUserDto(user.Id, user.Name, user.Hours))
             {
                 Placement = placement
             };

@@ -201,3 +201,4 @@ d:\myProject\repo\wdeymosw\DutyPlanner\obj\Debug\net10.0-windows\DutyPlanner.csp
 d:\myProject\repo\wdeymosw\DutyPlanner\obj\Debug\net10.0-windows\DutyPlan.4E0778E0.Up2Date
 d:\myProject\repo\wdeymosw\DutyPlanner\obj\Debug\net10.0-windows\DutyPlanner.genruntimeconfig.cache
 d:\myProject\repo\wdeymosw\DutyPlanner\obj\Debug\net10.0-windows\ref\DutyPlanner.dll
+D:\myProject\repo\wdeymosw\DutyPlanner\obj\Debug\net10.0-windows\DutyPlanner.sourcelink.json

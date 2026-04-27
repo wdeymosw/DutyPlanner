@@ -1,5 +1,3 @@
-﻿using DutyPlanner.Presentation.ViewModels;
-
 namespace DutyPlanner.Models
 {
     public sealed class DayUserDto
@@ -17,14 +15,13 @@ namespace DutyPlanner.Models
         }
 
 
-        public DayUserDto(UserViewModel user)
+        public DayUserDto(Guid userId, string? name, int hours, DayUserPlacement placement = DayUserPlacement.Active)
         {
             InstanceId = Guid.NewGuid();
-            UserID = user.Id;
-            Name = user.Name;
-            Hours = user.Hours;
-            Placement = DayUserPlacement.Active;
-
+            UserID = userId;
+            Name = name;
+            Hours = hours;
+            Placement = placement;
         }
     }
 

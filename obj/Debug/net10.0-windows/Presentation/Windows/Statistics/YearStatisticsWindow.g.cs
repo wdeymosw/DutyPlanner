@@ -53,8 +53,7 @@ namespace DutyPlanner.Presentation.Windows {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri(("/DutyPlanner;V1.0.0.0;component/presentation/windows/statistics/yearstatisticswin" +
-                    "dow.xaml"), System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/DutyPlanner;component/presentation/windows/statistics/yearstatisticswindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\Presentation\Windows\Statistics\YearStatisticsWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

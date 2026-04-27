@@ -16,7 +16,7 @@ namespace DutyPlanner
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : System.Windows.Application
     {
         public IServiceProvider Services { get; private set; } = null!;
 

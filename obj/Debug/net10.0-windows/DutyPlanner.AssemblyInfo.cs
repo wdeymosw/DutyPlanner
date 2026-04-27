@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DutyPlanner")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ded841e5e26289e4a8aa76a09508243283b9db3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a3ff582b9a1154b89bc289a103b5e4f2b8ff77f")]
 [assembly: System.Reflection.AssemblyProductAttribute("DutyPlanner")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DutyPlanner")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

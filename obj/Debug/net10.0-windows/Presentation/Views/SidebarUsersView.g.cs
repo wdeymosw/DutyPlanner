@@ -56,7 +56,7 @@ namespace DutyPlanner.Presentation.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/DutyPlanner;V1.0.0.0;component/presentation/views/sidebarusersview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/DutyPlanner;component/presentation/views/sidebarusersview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Presentation\Views\SidebarUsersView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

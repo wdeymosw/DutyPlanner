@@ -54,10 +54,10 @@ namespace DutyPlanner.Infrastrustures.Localization
             // 4️⃣ Меняем словарь в Application.Resources
             if (_currentDictionary != null)
             {
-                Application.Current.Resources.MergedDictionaries.Remove(_currentDictionary);
+                System.Windows.Application.Current.Resources.MergedDictionaries.Remove(_currentDictionary);
             }
 
-            Application.Current.Resources.MergedDictionaries.Add(newDictionary);
+            System.Windows.Application.Current.Resources.MergedDictionaries.Add(newDictionary);
             _currentDictionary = newDictionary;
 
             // 5️⃣ Фиксируем язык
@@ -68,7 +68,7 @@ namespace DutyPlanner.Infrastrustures.Localization
         }
 
         public string this[string key]
-            => Application.Current.Resources[key]?.ToString()
+            => System.Windows.Application.Current.Resources[key]?.ToString()
                ?? $"!{key}!";
     }
 }

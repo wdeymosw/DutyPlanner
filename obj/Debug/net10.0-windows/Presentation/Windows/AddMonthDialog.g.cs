@@ -53,7 +53,7 @@ namespace DutyPlanner.Presentation.Windows {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/DutyPlanner;V1.0.0.0;component/presentation/windows/addmonthdialog.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/DutyPlanner;component/presentation/windows/addmonthdialog.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Presentation\Windows\AddMonthDialog.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
