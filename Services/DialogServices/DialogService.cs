@@ -76,7 +76,7 @@ namespace DutyPlanner.Services
             var data = statsService.BuildMonth(
                 year,
                 month,
-                monthInfo.FolderPath);
+                monthService.GetFolderPath(year, month));
 
             var vm = ActivatorUtilities.CreateInstance<MonthStatisticsViewModel>(
                 _services,

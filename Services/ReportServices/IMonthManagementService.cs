@@ -7,5 +7,6 @@ namespace DutyPlanner.Services
         IReadOnlyList<MonthDescriptor> LoadExistingMonths();
         MonthDescriptor CreateMonth(int year, int month);
         void DeleteMonth(int year, int month);
+        string GetFolderPath(int year, int month);
     }
 }

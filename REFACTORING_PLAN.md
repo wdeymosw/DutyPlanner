@@ -142,8 +142,8 @@ DutyPlanner/
 
 ### Фаза 4 — Подготовка к SQLite
 
-- [ ] **4.1** Убрать `FolderPath` из `MonthDescriptor` — это файловый артефакт, не доменная модель
-- [ ] **4.2** `MonthManagementService` — читать путь из `settings.Current.DataFolderPath` при каждом вызове, не в конструкторе
+- [x] **4.1** Убрать `FolderPath` из `MonthDescriptor` — это файловый артефакт, не доменная модель
+- [x] **4.2** `MonthManagementService` — читать путь из `settings.Current.DataFolderPath` при каждом вызове, не в конструкторе
 
 ### Фаза 5 — Async I/O
 

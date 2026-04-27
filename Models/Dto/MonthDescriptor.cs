@@ -8,6 +8,5 @@ namespace DutyPlanner.Models
     {
         public int Year { get; init; }
         public int Month { get; init; }
-        public string FolderPath { get; init; } = null!;
     }
 }

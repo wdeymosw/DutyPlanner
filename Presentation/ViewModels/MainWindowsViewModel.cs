@@ -168,7 +168,7 @@ namespace DutyPlanner.Presentation.ViewModels
                 Pages.Add(new MonthPageViewModel(
                     m.Year,
                     m.Month,
-                    m.FolderPath,
+                    _monthService.GetFolderPath(m.Year, m.Month),
                     _dialogService,
                     _localization,
                     _dayRepository));
@@ -196,7 +196,7 @@ namespace DutyPlanner.Presentation.ViewModels
             var vm = new MonthPageViewModel(
                 m.Year,
                 m.Month,
-                m.FolderPath,
+                _monthService.GetFolderPath(m.Year, m.Month),
                 _dialogService,
                 _localization,
                 _dayRepository);

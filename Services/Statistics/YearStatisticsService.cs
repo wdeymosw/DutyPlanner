@@ -95,7 +95,7 @@ namespace DutyPlanner.Services
                 var monthDto = _monthStatistics.BuildMonth(
                     year,
                     month,
-                    monthInfo.FolderPath);
+                    _monthManagement.GetFolderPath(year, month));
 
                 foreach (var monthRow in monthDto.Rows)
                 {
