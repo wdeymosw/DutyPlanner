@@ -1,5 +1,6 @@
-﻿using DutyPlanner.Infrastrustures;
-using DutyPlanner.Infrastrustures.Localization; 
+﻿using DutyPlanner.Application.Interfaces;
+using DutyPlanner.Infrastrustures;
+using DutyPlanner.Infrastrustures.Localization;
 using DutyPlanner.Infrastrustures.MessageService;
 using DutyPlanner.Infrastrustures.Settings;
 using DutyPlanner.Models;
@@ -17,6 +18,7 @@ namespace DutyPlanner.Presentation.ViewModels
         private readonly ISettingsService _settings;
         private readonly IMessageService _messages;
         private readonly ILocalizationService _localization;
+        private readonly IFileLauncherService _fileLauncher;
 
         public IReadOnlyList<YearMonth> Months => Data.Months;
 
@@ -34,7 +36,7 @@ namespace DutyPlanner.Presentation.ViewModels
                 var end = Data.PeriodEnd
                     .ToString("MMMM yyyy", culture);
 
-                return $"Статистика за {start} – {end}";
+                return $"{_localization["Statistic_For"]} {start} – {end}";
             }
         }
 
@@ -43,17 +45,19 @@ namespace DutyPlanner.Presentation.ViewModels
 
         public event Action<bool?>? RequestClose;
 
-        public YearStatisticsViewModel( YearStatisticsDto data,
-                                        IExcelExportService excelExportService,
-                                        IMessageService messages,
-                                        ISettingsService settings,
-                                        ILocalizationService localization)
+        public YearStatisticsViewModel(YearStatisticsDto data,
+                                       IExcelExportService excelExportService,
+                                       IMessageService messages,
+                                       ISettingsService settings,
+                                       ILocalizationService localization,
+                                       IFileLauncherService fileLauncher)
         {
             Data = data ?? throw new ArgumentNullException(nameof(data));
             _excelExportService = excelExportService;
             _settings = settings;
             _messages = messages;
             _localization = localization;
+            _fileLauncher = fileLauncher;
 
             ExportCommand = new LambdaCommand(ExportToExcel);
             CloseCommand = new LambdaCommand(() => RequestClose?.Invoke(true));
@@ -75,10 +79,10 @@ namespace DutyPlanner.Presentation.ViewModels
 
             try
             {
-                _excelExportService.ExportYearStatistics(Data, filePath, _localization);
+                _excelExportService.ExportYearStatistics(Data, filePath);
 
                 if (_settings.Current.OpenExcelAfterExport)
-                    FileLauncher.OpenIfExists(filePath);
+                    _fileLauncher.OpenIfExists(filePath);
 
                 _messages.ShowInfo(
                     "Файл успешно экспортирован.",

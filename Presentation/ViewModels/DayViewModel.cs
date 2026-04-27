@@ -1,8 +1,7 @@
-﻿using DutyPlanner.Infrastrustures;
+using DutyPlanner.Domain.Repositories;
+using DutyPlanner.Infrastrustures;
 using DutyPlanner.Models;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Text.Json;
 
 namespace DutyPlanner.Presentation.ViewModels
 {
@@ -11,6 +10,7 @@ namespace DutyPlanner.Presentation.ViewModels
         public string FilePath { get; }
         public DateTime Date { get; }
 
+        private readonly IDayRepository _dayRepository;
 
         /// <summary>
         /// single source colection of user data storage
@@ -32,24 +32,18 @@ namespace DutyPlanner.Presentation.ViewModels
         /// command for remove users
         /// </summary>
         public LambdaCommand<DayUserViewModel> RemoveUserCommand { get; }
-        // public LambdaCommand<object> DropCommand { get; }
-
-
-
         #endregion
 
         /// <summary>
         /// ViewModels for days
         /// </summary>
-        /// <param name="date"></param>
-        /// <param name="filePath"></param>
-        public DayViewModel(DateTime date, string filePath)
+        public DayViewModel(DateTime date, string filePath, IDayRepository dayRepository)
         {
             Date = date;
             FilePath = filePath;
+            _dayRepository = dayRepository;
 
             RemoveUserCommand = new LambdaCommand<DayUserViewModel>(RemoveUser);
-            // DropCommand = new LambdaCommand<object>(OnDrop);
 
             Load();
         }
@@ -88,7 +82,6 @@ namespace DutyPlanner.Presentation.ViewModels
 
             SaveUsers();
         }
-
 
 
         public void MoveUser(DayUserViewModel user, DayUserPlacement target)
@@ -130,7 +123,6 @@ namespace DutyPlanner.Presentation.ViewModels
         }
 
 
-
         /// <summary>
         /// Load Users from storage
         /// </summary>
@@ -140,14 +132,7 @@ namespace DutyPlanner.Presentation.ViewModels
             ReserveUsers.Clear();
             _users.Clear();
 
-            if (!File.Exists(FilePath))
-                return;
-
-            var dtos = JsonSerializer.Deserialize<List<DayUserDto>>(
-                File.ReadAllText(FilePath));
-
-            if (dtos == null)
-                return;
+            var dtos = _dayRepository.Load(FilePath);
 
             foreach (var dto in dtos)
             {
@@ -166,11 +151,7 @@ namespace DutyPlanner.Presentation.ViewModels
         /// </summary>
         public void SaveUsers()
         {
-            var dtos = _users.Select(u => u.ToDto()).ToList();
-            File.WriteAllText(FilePath, JsonSerializer.Serialize(dtos,
-                new JsonSerializerOptions { WriteIndented = true }));
+            _dayRepository.Save(FilePath, _users.Select(u => u.ToDto()));
         }
-
-
     }
 }

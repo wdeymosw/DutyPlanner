@@ -16,7 +16,7 @@ namespace DutyPlanner.Services
             _localization = localization;
         }
 
-        public void ExportMonthStatistics(MonthStatisticsDto data, string filePath, ILocalizationService localization)
+        public void ExportMonthStatistics(MonthStatisticsDto data, string filePath)
         {
             
 
@@ -79,7 +79,7 @@ namespace DutyPlanner.Services
         // --- годовой экспорт уже обсуждали ---
 
 
-        public void ExportYearStatistics( YearStatisticsDto data, string filePath, ILocalizationService localization)
+        public void ExportYearStatistics(YearStatisticsDto data, string filePath)
         {
             using var workbook = new XLWorkbook();
             var ws = workbook.Worksheets.Add(

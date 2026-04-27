@@ -1,4 +1,5 @@
-﻿using DutyPlanner.Infrastrustures;
+using DutyPlanner.Domain.Repositories;
+using DutyPlanner.Infrastrustures;
 using DutyPlanner.Infrastrustures.Localization;
 using DutyPlanner.Services;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ namespace DutyPlanner.Presentation.ViewModels
     {
 
         private readonly IDialogService _dialogService;
+        private readonly IDayRepository _dayRepository;
 
         public int Year { get; }
         public int Month { get; }
@@ -37,14 +39,13 @@ namespace DutyPlanner.Presentation.ViewModels
         public ICommand RemoveDayCommand { get; }
         #endregion
 
-        // public MonthPageViewModel(){ }
-
-        public MonthPageViewModel(int year, int month, string folderPath, IDialogService dialogService, ILocalizationService localization)
+        public MonthPageViewModel(int year, int month, string folderPath, IDialogService dialogService, ILocalizationService localization, IDayRepository dayRepository)
         {
             Year = year;
             Month = month;
             FolderPath = folderPath;
             _dialogService = dialogService;
+            _dayRepository = dayRepository;
 
             localization.LanguageChanged += (_, _) =>
             {
@@ -64,7 +65,7 @@ namespace DutyPlanner.Presentation.ViewModels
         {
             Days.Clear();
 
-            foreach (var file in Directory.GetFiles(FolderPath, "*.json"))
+            foreach (var file in _dayRepository.GetDayFilePaths(FolderPath))
             {
                 var fileName = Path.GetFileNameWithoutExtension(file);
                 var parts = fileName.Split('-');
@@ -82,7 +83,7 @@ namespace DutyPlanner.Presentation.ViewModels
                     continue;
                 }
 
-                Days.Add(new DayViewModel(date, file));
+                Days.Add(new DayViewModel(date, file, _dayRepository));
             }
         }
 
@@ -100,8 +101,7 @@ namespace DutyPlanner.Presentation.ViewModels
                     string fileName = $"{d:00}-{date.DayOfWeek}.json";
                     string filePath = Path.Combine(FolderPath, fileName);
 
-                    if (!File.Exists(filePath))
-                        File.WriteAllText(filePath, "[]");
+                    _dayRepository.InitializeDay(filePath);
                 }
             }
 
@@ -129,23 +129,21 @@ namespace DutyPlanner.Presentation.ViewModels
             string fileName = $"{date.Day:00}-{date.DayOfWeek}.json";
             string filePath = Path.Combine(FolderPath, fileName);
 
-            if (!File.Exists(filePath))
-                File.WriteAllText(filePath, "[]");
+            _dayRepository.InitializeDay(filePath);
 
-            Days.Add(new DayViewModel(date, filePath));
+            Days.Add(new DayViewModel(date, filePath, _dayRepository));
         }
 
         private void RemoveDay(DayViewModel day)
         {
             if (day == null) return;
-            if (File.Exists(day.FilePath)) File.Delete(day.FilePath);
+            _dayRepository.Delete(day.FilePath);
             Days.Remove(day);
         }
 
         private void EnsureFolderExists()
         {
-            if (!Directory.Exists(FolderPath))
-                Directory.CreateDirectory(FolderPath);
+            _dayRepository.EnsureFolder(FolderPath);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DutyPlanner.Infrastrustures;
+﻿using DutyPlanner.Application.Interfaces;
+using DutyPlanner.Infrastrustures;
 using DutyPlanner.Infrastrustures.Localization;
 using DutyPlanner.Infrastrustures.MessageService;
 using DutyPlanner.Infrastrustures.Settings;
@@ -7,7 +8,6 @@ using DutyPlanner.Services;
 using DutyPlanner.Services.Statistics;
 using System.Globalization;
 using System.IO;
-using System.Windows;
 
 namespace DutyPlanner.Presentation.ViewModels
 {
@@ -17,6 +17,7 @@ namespace DutyPlanner.Presentation.ViewModels
         private readonly ISettingsService _settings;
         private readonly IMessageService _messages;
         private readonly ILocalizationService _localization;
+        private readonly IFileLauncherService _fileLauncher;
 
         public MonthStatisticsDto Data { get; }
 
@@ -39,13 +40,15 @@ namespace DutyPlanner.Presentation.ViewModels
             IExcelExportService excelExportService,
             IMessageService messages,
             ISettingsService settings,
-            ILocalizationService localization)
+            ILocalizationService localization,
+            IFileLauncherService fileLauncher)
         {
             Data = data ?? throw new ArgumentNullException(nameof(data));
             _excelExportService = excelExportService;
             _settings = settings;
             _messages = messages;
             _localization = localization;
+            _fileLauncher = fileLauncher;
 
             ExportExcelCommand = new LambdaCommand(ExportExcel);
             CloseCommand = new LambdaCommand(() => RequestClose?.Invoke(true));
@@ -67,10 +70,10 @@ namespace DutyPlanner.Presentation.ViewModels
 
             try
             {
-                _excelExportService.ExportMonthStatistics(Data, filePath, _localization);
+                _excelExportService.ExportMonthStatistics(Data, filePath);
 
                 if (_settings.Current.OpenExcelAfterExport)
-                    FileLauncher.OpenIfExists(filePath);
+                    _fileLauncher.OpenIfExists(filePath);
 
                 _messages.ShowInfo(
                     $"{_localization["Excel_Successful_Preservation"]}",

@@ -120,16 +120,16 @@ DutyPlanner/
 
 Каждый шаг изолирован, система остаётся рабочей.
 
-- [ ] **2.1** `UserService` → использовать `IUserRepository` (убрать сырой `File.ReadAllText`)
-- [ ] **2.2** `DayViewModel` → использовать `IDayRepository` (убрать весь `System.IO` и `JsonSerializer`)
-- [ ] **2.3** `MonthPageViewModel` → использовать `IDayRepository` (убрать весь `System.IO`)
-- [ ] **2.4** Создать `Application/DTOs/MonthExportDto.cs`, изменить сигнатуру `IMonthReportService`
-- [ ] **2.5** `IExcelExportService` — убрать `ILocalizationService` из параметров методов
-- [ ] **2.6** Заменить вызовы статического `FileLauncher` на `IFileLauncherService` в ViewModels
-- [ ] **2.7** `MessageService` — локализовать заголовки по умолчанию
-- [ ] **2.8** `YearStatisticsViewModel.Title` — заменить `"Статистика за..."` на ключ локализации
-- [ ] **2.9** `MainWindowsViewModel.RemoveMonth()` — заменить русскую строку на ключ локализации
-- [ ] **2.10** `FileDialogService` — заголовок из локализации вместо хардкода
+- [x] **2.1** `UserService` → использовать `IUserRepository` (убрать сырой `File.ReadAllText`)
+- [x] **2.2** `DayViewModel` → использовать `IDayRepository` (убрать весь `System.IO` и `JsonSerializer`)
+- [x] **2.3** `MonthPageViewModel` → использовать `IDayRepository` (убрать весь `System.IO`)
+- [x] **2.4** Создать `Application/DTOs/MonthExportDto.cs`, изменить сигнатуру `IMonthReportService`
+- [x] **2.5** `IExcelExportService` — убрать `ILocalizationService` из параметров методов
+- [x] **2.6** Заменить вызовы статического `FileLauncher` на `IFileLauncherService` в ViewModels
+- [x] **2.7** `MessageService` — локализовать заголовки по умолчанию
+- [x] **2.8** `YearStatisticsViewModel.Title` — заменить `"Статистика за..."` на ключ локализации
+- [x] **2.9** `MainWindowsViewModel.RemoveMonth()` — заменить русскую строку на ключ локализации
+- [x] **2.10** `FileDialogService` — заголовок из локализации вместо хардкода
 
 ### Фаза 3 — Переименование namespace (один атомарный коммит)
 

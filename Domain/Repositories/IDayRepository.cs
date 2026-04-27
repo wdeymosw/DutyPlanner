@@ -7,5 +7,9 @@ namespace DutyPlanner.Domain.Repositories
         bool Exists(string filePath);
         List<DayUserDto> Load(string filePath);
         void Save(string filePath, IEnumerable<DayUserDto> users);
+        void InitializeDay(string filePath);
+        void Delete(string filePath);
+        string[] GetDayFilePaths(string folderPath);
+        void EnsureFolder(string folderPath);
     }
 }

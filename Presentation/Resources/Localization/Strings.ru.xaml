@@ -53,6 +53,13 @@
     <sys:String x:Key="Pdf_ExportCompleted">Экспорт завершён</sys:String>
     <sys:String x:Key="Pdf_Error_Export">Ошибка при создании PDF:</sys:String>
 
+    <!-- Message dialogs -->
+    <sys:String x:Key="Dialog_Confirm_Title">Подтверждение</sys:String>
+    <sys:String x:Key="Dialog_Info_Title">Информация</sys:String>
+    <sys:String x:Key="Dialog_Error_Title">Ошибка</sys:String>
+    <sys:String x:Key="MainWindow_ConfirmDeleteMonth">Удалить месяц</sys:String>
+    <sys:String x:Key="Settings_SelectFolder">Выберите папку данных</sys:String>
+
     <!-- Exel export-->
     <sys:String x:Key="Statistic_For">Статистика за</sys:String>
     <sys:String x:Key="Excel_Successful_Preservation">Файл успешно экспортирован</sys:String>

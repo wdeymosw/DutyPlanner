@@ -1,4 +1,6 @@
-﻿using DutyPlanner.Infrastrustures;
+﻿using DutyPlanner.Application.DTOs;
+using DutyPlanner.Domain.Repositories;
+using DutyPlanner.Infrastrustures;
 using DutyPlanner.Infrastrustures.Localization;
 using DutyPlanner.Infrastrustures.MessageService;
 using DutyPlanner.Infrastrustures.Settings;
@@ -18,6 +20,7 @@ namespace DutyPlanner.Presentation.ViewModels
         private readonly ISettingsService _settingsService;
         private readonly ILocalizationService _localization;
         private readonly IYearPeriodService _yearPeriodService;
+        private readonly IDayRepository _dayRepository;
         #endregion
 
         public ObservableCollection<MonthPageViewModel> Pages { get; } = new();
@@ -102,7 +105,8 @@ namespace DutyPlanner.Presentation.ViewModels
             IMonthReportService reportService,
             IMonthManagementService monthService,
             ISettingsService settingsService,
-            ILocalizationService localization)
+            ILocalizationService localization,
+            IDayRepository dayRepository)
         {
             // Services
 
@@ -114,6 +118,7 @@ namespace DutyPlanner.Presentation.ViewModels
             _settingsService = settingsService;
             _localization = localization;
             _yearPeriodService = yearPeriodService ?? throw new ArgumentNullException(nameof(yearPeriodService));
+            _dayRepository = dayRepository;
 
             _settingsService.SettingsChanged += OnSettingsChanged;
 
@@ -165,7 +170,8 @@ namespace DutyPlanner.Presentation.ViewModels
                     m.Month,
                     m.FolderPath,
                     _dialogService,
-                    _localization));
+                    _localization,
+                    _dayRepository));
             }
 
             RestoreLastPage();
@@ -192,7 +198,8 @@ namespace DutyPlanner.Presentation.ViewModels
                 m.Month,
                 m.FolderPath,
                 _dialogService,
-                _localization);
+                _localization,
+                _dayRepository);
 
             vm.CreateDefaultDays();
 
@@ -209,7 +216,7 @@ namespace DutyPlanner.Presentation.ViewModels
                 return;
 
             if (!_messageService.Confirm(
-                $"Удалить месяц {CurrentPage.MonthName} {CurrentPage.Year}?"))
+                $"{_localization["MainWindow_ConfirmDeleteMonth"]} {CurrentPage.MonthName} {CurrentPage.Year}?"))
                 return;
 
             _monthService.DeleteMonth(CurrentPage.Year, CurrentPage.Month);
@@ -226,9 +233,22 @@ namespace DutyPlanner.Presentation.ViewModels
             if (CurrentPage == null)
                 return;
 
+            var exportDto = new MonthExportDto
+            {
+                Year = CurrentPage.Year,
+                Month = CurrentPage.Month,
+                FolderPath = CurrentPage.FolderPath,
+                Days = CurrentPage.Days.Select(d => new DayExportDto
+                {
+                    Date = d.Date,
+                    ActiveUserNames = d.ActiveUsers.Cast<DayUserViewModel>().Select(u => u.Name).ToList(),
+                    ReserveUserNames = d.ReserveUsers.Cast<DayUserViewModel>().Select(u => u.Name).ToList()
+                }).ToList()
+            };
+
             try
             {
-                _reportService.ExportMonthPdf(CurrentPage);
+                _reportService.ExportMonthPdf(exportDto);
 
                 _messageService.ShowInfo(
                     $"{_localization["Pdf_Successful_Preservation"]}",

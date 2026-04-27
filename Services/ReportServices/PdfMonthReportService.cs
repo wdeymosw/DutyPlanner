@@ -1,5 +1,5 @@
-﻿using DutyPlanner.Infrastrustures.Localization;
-using DutyPlanner.Presentation.ViewModels;
+using DutyPlanner.Application.DTOs;
+using DutyPlanner.Infrastrustures.Localization;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -18,23 +18,23 @@ namespace DutyPlanner.Services
             _localization = localization;
         }
 
-        public void ExportMonthPdf(MonthPageViewModel monthPage)
+        public void ExportMonthPdf(MonthExportDto monthExport)
         {
             QuestPDF.Settings.License = LicenseType.Community;
 
-            if (monthPage == null || monthPage.Days.Count == 0)
+            if (monthExport == null || monthExport.Days.Count == 0)
                 return;
 
-            string folder = monthPage.FolderPath;
+            string folder = monthExport.FolderPath;
             if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
 
             var culture = new CultureInfo(_localization.CurrentLanguage);
-            var monthName = culture.DateTimeFormat.GetMonthName(monthPage.Month);
+            var monthName = culture.DateTimeFormat.GetMonthName(monthExport.Month);
 
             string filePath = Path.Combine(
                 folder,
-                $"Report_{monthName}_{monthPage.Year}.pdf");
+                $"Report_{monthName}_{monthExport.Year}.pdf");
 
             var doc = Document.Create(container =>
             {
@@ -51,12 +51,11 @@ namespace DutyPlanner.Services
 
                     // ===== HEADER =====
                     page.Header()
-
                         .AlignCenter()
                         .Text(
                             $"{_localization["Pdf_String_1"]}\n" +
                             $"{_localization["Pdf_String_2"]}\n" +
-                            $"{_localization["Pdf_String_3"]} {monthName} {monthPage.Year}")
+                            $"{_localization["Pdf_String_3"]} {monthName} {monthExport.Year}")
                         .FontSize(15)
                         .SemiBold();
 
@@ -88,17 +87,13 @@ namespace DutyPlanner.Services
                             });
 
                             // ===== TABLE BODY =====
-                            foreach (var day in monthPage.Days)
+                            foreach (var day in monthExport.Days)
                             {
                                 var activeUsers = string.Join(", ",
-                                    day.ActiveUsers
-                                        .Cast<DayUserViewModel>()
-                                        .Select(u => ToShortName(u.Name)));
+                                    day.ActiveUserNames.Select(ToShortName));
 
                                 var reserveUsers = string.Join(", ",
-                                    day.ReserveUsers
-                                        .Cast<DayUserViewModel>()
-                                        .Select(u => ToShortName(u.Name)));
+                                    day.ReserveUserNames.Select(ToShortName));
 
                                 table.Cell().Element(BodyCell)
                                     .Text(day.Date.ToString("ddd dd.MM", culture));
@@ -126,8 +121,6 @@ namespace DutyPlanner.Services
         /// <summary>
         /// Returns short name format: "Last F.M."
         /// </summary>
-        /// <param name="fullName"></param>
-        /// <returns></returns>
         private static string ToShortName(string fullName)
         {
             if (string.IsNullOrWhiteSpace(fullName))

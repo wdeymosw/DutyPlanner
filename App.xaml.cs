@@ -1,6 +1,10 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 
+using DutyPlanner.Application.Interfaces;
+using DutyPlanner.Domain.Repositories;
+using DutyPlanner.Infrastructure.Persistence.Json;
+using DutyPlanner.Infrastructure.Shell;
 using DutyPlanner.Presentation.ViewModels;
 using DutyPlanner.Presentation.Windows;
 using DutyPlanner.Services;
@@ -36,6 +40,10 @@ namespace DutyPlanner
             services.AddSingleton<IFileDialogService, FileDialogService>(); // For showing file dialogs
             services.AddSingleton<IJsonFileStorage, JsonFileStorage>();// For storing data in JSON files
             services.AddSingleton<IFileStorage, FileStorage>(); // For general file operations
+
+            services.AddSingleton<IUserRepository, JsonUserRepository>(); // JSON-backed user repository
+            services.AddSingleton<IDayRepository, JsonDayRepository>(); // JSON-backed day repository
+            services.AddSingleton<IFileLauncherService, FileLauncherService>(); // For opening files in shell
 
             services.AddSingleton<IUserService, UserService>(); // For managing users
             services.AddSingleton<IDialogService, DialogService>(); // For showing dialogs

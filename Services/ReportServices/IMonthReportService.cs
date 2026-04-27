@@ -1,9 +1,9 @@
-﻿using DutyPlanner.Presentation.ViewModels;
+using DutyPlanner.Application.DTOs;
 
 namespace DutyPlanner.Services
 {
     public interface IMonthReportService
     {
-        void ExportMonthPdf(MonthPageViewModel monthPage);
+        void ExportMonthPdf(MonthExportDto monthExport);
     }
 }

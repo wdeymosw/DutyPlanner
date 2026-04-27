@@ -1,9 +1,17 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using DutyPlanner.Infrastrustures.Localization;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DutyPlanner.Services
 {
     public sealed class FileDialogService : IFileDialogService
     {
+        private readonly ILocalizationService _localization;
+
+        public FileDialogService(ILocalizationService localization)
+        {
+            _localization = localization;
+        }
+
         public string? SelectFolder(string initialPath)
         {
             var dialog = new CommonOpenFileDialog
@@ -11,7 +19,7 @@ namespace DutyPlanner.Services
                 IsFolderPicker = true,
                 InitialDirectory = initialPath,
                 EnsurePathExists = true,
-                Title = "Выберите папку данных"
+                Title = _localization["Settings_SelectFolder"]
             };
 
             return dialog.ShowDialog() == CommonFileDialogResult.Ok

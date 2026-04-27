@@ -53,6 +53,13 @@
     <sys:String x:Key="Pdf_ExportCompleted">Експорт завершено</sys:String>
     <sys:String x:Key="Pdf_Error_Export">Помилка під час створення PDF:</sys:String>
     
+    <!-- Message dialogs -->
+    <sys:String x:Key="Dialog_Confirm_Title">Підтвердження</sys:String>
+    <sys:String x:Key="Dialog_Info_Title">Інформація</sys:String>
+    <sys:String x:Key="Dialog_Error_Title">Помилка</sys:String>
+    <sys:String x:Key="MainWindow_ConfirmDeleteMonth">Видалити місяць</sys:String>
+    <sys:String x:Key="Settings_SelectFolder">Виберіть папку даних</sys:String>
+
     <!-- Exel export-->
     <sys:String x:Key="Statistic_For">Статистика за</sys:String>
     <sys:String x:Key="Excel_Successful_Preservation">Файл успішно експортований</sys:String>

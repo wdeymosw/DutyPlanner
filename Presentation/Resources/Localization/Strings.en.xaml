@@ -21,6 +21,11 @@
     <sys:String x:Key="Language_en">English</sys:String>
     <sys:String x:Key="Language_uk">Українська</sys:String>
 
- 
+    <!-- Message dialogs -->
+    <sys:String x:Key="Dialog_Confirm_Title">Confirm</sys:String>
+    <sys:String x:Key="Dialog_Info_Title">Information</sys:String>
+    <sys:String x:Key="Dialog_Error_Title">Error</sys:String>
+    <sys:String x:Key="MainWindow_ConfirmDeleteMonth">Delete month</sys:String>
+    <sys:String x:Key="Settings_SelectFolder">Select data folder</sys:String>
 
 </ResourceDictionary>
