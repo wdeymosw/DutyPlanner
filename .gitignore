@@ -1,2 +1,29 @@
-/.vscode
-/bin
+# Build output
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# .NET
+*.nupkg
+*.snupkg
+project.lock.json
+
+# User data (runtime generated)
+Data/
+settings.json
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Git
+.gitignore
