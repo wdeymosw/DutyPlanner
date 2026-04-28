@@ -77,6 +77,7 @@ namespace DutyPlanner.Services
                                 columns.ConstantColumn(50);   // Район
                                 columns.RelativeColumn();     // Актив
                                 columns.RelativeColumn();     // Резерв
+                                columns.RelativeColumn();     // Комментарий
                             });
 
                             // ===== TABLE HEADER =====
@@ -87,6 +88,7 @@ namespace DutyPlanner.Services
                                 header.Cell().Element(HeaderCell).Text($"{_localization["Pdf_District"]}");
                                 header.Cell().Element(HeaderCell).Text($"{_localization["Pdf_FullName"]}");
                                 header.Cell().Element(HeaderCell).Text($"{_localization["Pdf_Reserve"]}");
+                                header.Cell().Element(HeaderCell).Text($"{_localization["Day_Comment"]}");
                             });
 
                             // ===== TABLE BODY =====
@@ -105,6 +107,7 @@ namespace DutyPlanner.Services
                                 table.Cell().Element(BodyCell).Text("1–5 мкр.");
                                 table.Cell().Element(BodyCell).Text(activeUsers);
                                 table.Cell().Element(BodyCell).Text(reserveUsers);
+                                table.Cell().Element(BodyCell).Text(day.Comment ?? "");
                             }
                         });
                 });

@@ -2,6 +2,7 @@ using DutyPlanner.Domain.Repositories;
 using DutyPlanner.Infrastructure.JsonFileStorage;
 using DutyPlanner.Models;
 using System.IO;
+using System.Text.Json;
 
 namespace DutyPlanner.Infrastructure.Persistence.Json
 {
@@ -16,23 +17,27 @@ namespace DutyPlanner.Infrastructure.Persistence.Json
 
         public bool Exists(string filePath) => _storage.Exists(filePath);
 
-        public List<DayUserDto> Load(string filePath)
+        public DayFileDto Load(string filePath)
         {
             if (!_storage.Exists(filePath))
-                return [];
+                return new DayFileDto();
 
-            return _storage.Load<List<DayUserDto>>(filePath);
+            var raw = File.ReadAllText(filePath).TrimStart();
+            if (raw.StartsWith('['))
+                return new DayFileDto { Users = JsonSerializer.Deserialize<List<DayUserDto>>(raw) ?? [] };
+
+            return _storage.Load<DayFileDto>(filePath);
         }
 
-        public void Save(string filePath, IEnumerable<DayUserDto> users)
+        public void Save(string filePath, DayFileDto data)
         {
-            _storage.Save(filePath, users.ToList());
+            _storage.Save(filePath, data);
         }
 
         public void InitializeDay(string filePath)
         {
             if (!_storage.Exists(filePath))
-                _storage.Save(filePath, new List<DayUserDto>());
+                _storage.Save(filePath, new DayFileDto());
         }
 
         public void Delete(string filePath)
@@ -55,15 +60,19 @@ namespace DutyPlanner.Infrastructure.Persistence.Json
                 Directory.CreateDirectory(folderPath);
         }
 
-        public async Task<List<DayUserDto>> LoadAsync(string filePath)
+        public async Task<DayFileDto> LoadAsync(string filePath)
         {
             if (!_storage.Exists(filePath))
-                return [];
+                return new DayFileDto();
 
-            return await _storage.LoadAsync<List<DayUserDto>>(filePath);
+            var raw = (await File.ReadAllTextAsync(filePath)).TrimStart();
+            if (raw.StartsWith('['))
+                return new DayFileDto { Users = JsonSerializer.Deserialize<List<DayUserDto>>(raw) ?? [] };
+
+            return await _storage.LoadAsync<DayFileDto>(filePath);
         }
 
-        public Task SaveAsync(string filePath, IEnumerable<DayUserDto> users)
-            => _storage.SaveAsync(filePath, users.ToList());
+        public Task SaveAsync(string filePath, DayFileDto data)
+            => _storage.SaveAsync(filePath, data);
     }
 }

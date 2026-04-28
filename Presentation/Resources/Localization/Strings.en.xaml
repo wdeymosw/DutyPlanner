@@ -13,6 +13,7 @@
     <sys:String x:Key="Common_Users">Name</sys:String>
     <sys:String x:Key="Day_Active">Active</sys:String>
     <sys:String x:Key="Day_Reserve">Reserve</sys:String>
+    <sys:String x:Key="Day_Comment">Comment</sys:String>
 
     <!-- Dialogs -->
     <sys:String x:Key="Dialogs_Year">Year</sys:String>

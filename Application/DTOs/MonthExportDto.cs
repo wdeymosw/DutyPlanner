@@ -5,6 +5,7 @@ namespace DutyPlanner.Application.DTOs
         public DateTime Date { get; init; }
         public IReadOnlyList<string> ActiveUserNames { get; init; } = [];
         public IReadOnlyList<string> ReserveUserNames { get; init; } = [];
+        public string Comment { get; init; } = "";
     }
 
     public class MonthExportDto

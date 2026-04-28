@@ -242,7 +242,8 @@ namespace DutyPlanner.Presentation.ViewModels
                 {
                     Date = d.Date,
                     ActiveUserNames = d.ActiveUsers.Cast<DayUserViewModel>().Select(u => u.Name).ToList(),
-                    ReserveUserNames = d.ReserveUsers.Cast<DayUserViewModel>().Select(u => u.Name).ToList()
+                    ReserveUserNames = d.ReserveUsers.Cast<DayUserViewModel>().Select(u => u.Name).ToList(),
+                    Comment = d.Comment
                 }).ToList()
             };
 

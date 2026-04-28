@@ -12,7 +12,17 @@ dotnet build DutyPlanner.sln
 dotnet run --project DutyPlanner.csproj
 ```
 
-There are no automated tests in this project.
+### Tests
+
+```bash
+# Run all tests
+dotnet test DutyPlanner.Tests/DutyPlanner.Tests.csproj
+
+# Run a specific test class
+dotnet test DutyPlanner.Tests/DutyPlanner.Tests.csproj --filter "FullyQualifiedName~UserServiceTests"
+```
+
+Test project uses **xUnit** + **NSubstitute** (mocking) + **FluentAssertions**. Tests live in `DutyPlanner.Tests/Unit/Services/`. Use `Substitute.For<IInterface>()` to mock repository dependencies; the service under test is constructed directly with the mock injected.
 
 ## Architecture Overview
 
@@ -39,7 +49,7 @@ Migration target: move `Models/` into `Domain/`/`Application/` and `Services/` i
 
 ### DI Registration
 
-`App.xaml.cs` registers ~26 services. Infrastructure services are `Singleton`; dialog services and ViewModels are `Transient`. To add a new feature, register it there and inject via constructor. Switching from JSON to SQLite only requires:
+`App.xaml.cs` registers ~20 services. Infrastructure services, core services, and main ViewModels (`MainWindowsViewModel`, `SidebarUsersViewModel`) are `Singleton`. Dialog ViewModels (`AddMonthDialogViewModel`, `AddDayDialogViewModel`, `SettingsViewModel`) and Windows are `Transient`. To add a new feature, register it there and inject via constructor. Switching from JSON to SQLite only requires:
 1. Implementing `SqliteUserRepository : IUserRepository` and `SqliteDayRepository : IDayRepository`
 2. Changing two lines in `App.xaml.cs`
 

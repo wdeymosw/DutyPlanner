@@ -14,6 +14,7 @@
     <sys:String x:Key="Common_Users">Ф.И.О.</sys:String>
     <sys:String x:Key="Day_Active">Актив</sys:String>
     <sys:String x:Key="Day_Reserve">Резерв</sys:String>
+    <sys:String x:Key="Day_Comment">Комментарий</sys:String>
     
     
     <!--Dialogs -->

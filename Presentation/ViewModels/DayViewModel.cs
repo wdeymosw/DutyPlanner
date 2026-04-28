@@ -2,6 +2,7 @@ using DutyPlanner.Domain.Repositories;
 using DutyPlanner.Presentation.Commands;
 using DutyPlanner.Models;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace DutyPlanner.Presentation.ViewModels
 {
@@ -26,6 +27,33 @@ namespace DutyPlanner.Presentation.ViewModels
         /// Projection for storing reserve users
         /// </summary>
         public ObservableCollection<DayUserViewModel> ReserveUsers { get; } = new();
+
+        #region Comment
+        private string _comment = "";
+        public string Comment
+        {
+            get => _comment;
+            set
+            {
+                if (Set(ref _comment, value))
+                    RestartSaveTimer();
+            }
+        }
+
+        private DispatcherTimer? _saveTimer;
+
+        private void RestartSaveTimer()
+        {
+            _saveTimer?.Stop();
+            _saveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+            _saveTimer.Tick += async (_, _) =>
+            {
+                _saveTimer!.Stop();
+                try { await SaveDayAsync(); } catch { }
+            };
+            _saveTimer.Start();
+        }
+        #endregion
 
         #region Commands
         /// <summary>
@@ -80,7 +108,7 @@ namespace DutyPlanner.Presentation.ViewModels
             else
                 ReserveUsers.Add(vm);
 
-            try { await SaveUsersAsync(); }
+            try { await SaveDayAsync(); }
             catch { /* сохранение не удалось — исключение не должно упасть в поток UI */ }
         }
 
@@ -103,7 +131,7 @@ namespace DutyPlanner.Presentation.ViewModels
             else
                 ReserveUsers.Add(user);
 
-            try { await SaveUsersAsync(); }
+            try { await SaveDayAsync(); }
             catch { /* сохранение не удалось — исключение не должно упасть в поток UI */ }
         }
 
@@ -121,7 +149,7 @@ namespace DutyPlanner.Presentation.ViewModels
             ReserveUsers.Remove(user);
 
             // сохранить
-            await SaveUsersAsync();
+            await SaveDayAsync();
         }
 
 
@@ -134,9 +162,10 @@ namespace DutyPlanner.Presentation.ViewModels
             ReserveUsers.Clear();
             _users.Clear();
 
-            var dtos = _dayRepository.Load(FilePath);
+            var dayFile = _dayRepository.Load(FilePath);
+            _comment = dayFile.Comment;
 
-            foreach (var dto in dtos)
+            foreach (var dto in dayFile.Users)
             {
                 var user = new DayUserViewModel(dto);
                 _users.Add(user);
@@ -149,9 +178,13 @@ namespace DutyPlanner.Presentation.ViewModels
         }
 
         /// <summary>
-        /// Save users to storage asynchronously
+        /// Save day data (users + comment) to storage asynchronously
         /// </summary>
-        private Task SaveUsersAsync()
-            => _dayRepository.SaveAsync(FilePath, _users.Select(u => u.ToDto()));
+        private Task SaveDayAsync()
+            => _dayRepository.SaveAsync(FilePath, new DayFileDto
+            {
+                Comment = _comment,
+                Users = _users.Select(u => u.ToDto()).ToList()
+            });
     }
 }
