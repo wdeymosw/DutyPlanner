@@ -71,7 +71,7 @@
 > `AddFromSidebar` и `MoveUser` в `DayViewModel` — не event-handler'ы, но объявлены `async void`.
 > Исключение из `SaveUsersAsync()` падает необработанным.
 
-- [ ] **4.1** `DayViewModel.cs:66` (`AddFromSidebar`) — обернуть `await SaveUsersAsync()` в try-catch
+- [x] **4.1** `DayViewModel.cs:66` (`AddFromSidebar`) — обернуть `await SaveUsersAsync()` в try-catch
   ```csharp
   private async void AddFromSidebar(UserViewModel user, DayUserPlacement placement)
   {
@@ -81,7 +81,7 @@
   }
   ```
 
-- [ ] **4.2** `DayViewModel.cs:87` (`MoveUser`) — то же самое
+- [x] **4.2** `DayViewModel.cs:87` (`MoveUser`) — то же самое
 
 ---
 

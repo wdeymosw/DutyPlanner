@@ -80,7 +80,8 @@ namespace DutyPlanner.Presentation.ViewModels
             else
                 ReserveUsers.Add(vm);
 
-            await SaveUsersAsync();
+            try { await SaveUsersAsync(); }
+            catch { /* сохранение не удалось — исключение не должно упасть в поток UI */ }
         }
 
 
@@ -102,7 +103,8 @@ namespace DutyPlanner.Presentation.ViewModels
             else
                 ReserveUsers.Add(user);
 
-            await SaveUsersAsync();
+            try { await SaveUsersAsync(); }
+            catch { /* сохранение не удалось — исключение не должно упасть в поток UI */ }
         }
 
 
