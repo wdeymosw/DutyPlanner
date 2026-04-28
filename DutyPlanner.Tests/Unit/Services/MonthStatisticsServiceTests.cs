@@ -1,3 +1,4 @@
+using DutyPlanner.Domain.Repositories;
 using DutyPlanner.Infrastructure.JsonFileStorage;
 using DutyPlanner.Models;
 using DutyPlanner.Services;
@@ -10,17 +11,20 @@ namespace DutyPlanner.Tests.Unit.Services;
 public class MonthStatisticsServiceTests : IDisposable
 {
     private readonly IJsonFileStorage _storage = Substitute.For<IJsonFileStorage>();
+    private readonly IDayRepository _dayRepository = Substitute.For<IDayRepository>();
     private readonly string _tempDir;
 
     public MonthStatisticsServiceTests()
     {
         _tempDir = Path.Combine(Path.GetTempPath(), $"DPTests_{Guid.NewGuid():N}");
         Directory.CreateDirectory(_tempDir);
+        _dayRepository.GetDayFilePaths(Arg.Any<string>())
+            .Returns(ci => Directory.GetFiles(ci.Arg<string>(), "*.json"));
     }
 
     public void Dispose() => Directory.Delete(_tempDir, recursive: true);
 
-    private MonthStatisticsService CreateService() => new(_storage);
+    private MonthStatisticsService CreateService() => new(_storage, _dayRepository);
 
     private string CreateDayFile(int day)
     {

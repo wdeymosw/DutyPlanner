@@ -1,4 +1,5 @@
-﻿using DutyPlanner.Infrastructure.JsonFileStorage;
+﻿using DutyPlanner.Domain.Repositories;
+using DutyPlanner.Infrastructure.JsonFileStorage;
 using DutyPlanner.Models;
 using DutyPlanner.Models.Dto;
 using System.IO;
@@ -8,10 +9,12 @@ namespace DutyPlanner.Services
     public sealed class MonthStatisticsService : IMonthStatisticsService
     {
         private readonly IJsonFileStorage _storage;
+        private readonly IDayRepository _dayRepository;
 
-        public MonthStatisticsService(IJsonFileStorage storage)
+        public MonthStatisticsService(IJsonFileStorage storage, IDayRepository dayRepository)
         {
             _storage = storage;
+            _dayRepository = dayRepository;
         }
 
         public MonthStatisticsDto BuildMonth(int year, int month, string folderPath)
@@ -20,7 +23,7 @@ namespace DutyPlanner.Services
             var rows = new Dictionary<Guid, MonthStatisticsRowDto>();
             var days = GetAllDays(year, month);
 
-            foreach (var file in Directory.GetFiles(folderPath, "*.json"))
+            foreach (var file in _dayRepository.GetDayFilePaths(folderPath))
             {
                 if (!TryParseDay(file, year, month, out var date))
                     continue;

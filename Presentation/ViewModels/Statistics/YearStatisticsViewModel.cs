@@ -20,25 +20,16 @@ namespace DutyPlanner.Presentation.ViewModels
         private readonly ILocalizationService _localization;
         private readonly IFileLauncherService _fileLauncher;
 
+        private CultureInfo _culture;
+
         public IReadOnlyList<YearMonth> Months => Data.Months;
 
         public IReadOnlyList<YearStatisticsRowDto> Rows => Data.Rows;
 
-        public string Title
-        {
-            get
-            {
-                var culture = new CultureInfo(_settings.Current.Language);
-
-                var start = Data.PeriodStart
-                    .ToString("MMMM yyyy", culture);
-
-                var end = Data.PeriodEnd
-                    .ToString("MMMM yyyy", culture);
-
-                return $"{_localization["Statistic_For"]} {start} – {end}";
-            }
-        }
+        public string Title =>
+            $"{_localization["Statistic_For"]} " +
+            $"{Data.PeriodStart.ToString("MMMM yyyy", _culture)} – " +
+            $"{Data.PeriodEnd.ToString("MMMM yyyy", _culture)}";
 
         public LambdaCommand CloseCommand { get; }
         public LambdaCommand ExportCommand { get; }
@@ -59,49 +50,26 @@ namespace DutyPlanner.Presentation.ViewModels
             _localization = localization;
             _fileLauncher = fileLauncher;
 
+            _culture = new CultureInfo(settings.Current.Language);
+            localization.LanguageChanged += (_, _) =>
+            {
+                _culture = new CultureInfo(_settings.Current.Language);
+                OnPropertyChanged(nameof(Title));
+            };
+
             ExportCommand = new LambdaCommand(ExportToExcel);
             CloseCommand = new LambdaCommand(() => RequestClose?.Invoke(true));
         }
 
         private async void ExportToExcel()
         {
-            var exportFolder = Path.Combine(
-             AppContext.BaseDirectory,
-             _settings.Current.DefaultExportFolder);
+            var exportFolder = Path.Combine(AppContext.BaseDirectory, _settings.Current.DefaultExportFolder);
+            var filePath = Path.Combine(exportFolder, $"{Data.PeriodStart:yyyyMM}-{Data.PeriodEnd:yyyyMM}.xlsx");
 
-            Directory.CreateDirectory(exportFolder);
-
-            var fileName = $"{Data.PeriodStart:yyyyMM}-{Data.PeriodEnd:yyyyMM}.xlsx";
-            var filePath = Path.Combine(exportFolder, fileName);
-
-            try
-            {
-                await _excelExportService.ExportYearStatisticsAsync(Data, filePath);
-
-                if (_settings.Current.OpenExcelAfterExport)
-                    _fileLauncher.OpenIfExists(filePath);
-
-                _messages.ShowInfo(
-                    _localization["Excel_Successful_Preservation"],
-                    _localization["Excel_ExportCompleted"]);
-            }
-            catch (IOException)
-            {
-                _messages.ShowError(
-                    $"{_localization["Exel_Error_Export"]}\n\n" +
-                    $"{_localization["Excel_Strign_1"]}\n" +
-                    $"{_localization["Excel_Strign_2"]}\n" +
-                    $"{_localization["Excel_Strign_3"]}\n" +
-                    $"{_localization["Excel_Strign_4"]}\n\n" +
-                    _localization["Excel_String_5"],
-                    _localization["Excel_ExportCompleted"]);
-            }
-            catch (Exception ex)
-            {
-                _messages.ShowError(
-                    $"{_localization["Exel_Error_Export_2"]}\n\n" + ex.Message,
-                    _localization["Excel_ExportCompleted"]);
-            }
+            await ExportHelper.RunExportAsync(
+                filePath,
+                () => _excelExportService.ExportYearStatisticsAsync(Data, filePath),
+                _settings, _fileLauncher, _messages, _localization);
         }
     }
 }

@@ -87,7 +87,7 @@
 
 ## Фаза 5 — Производительность: N+1 в `YearStatisticsService`
 
-- [ ] **5.1** `YearStatisticsService.cs:82–97` — вынести `LoadExistingMonths()` за пределы цикла
+- [x] **5.1** `YearStatisticsService.cs:82–97` — вынести `LoadExistingMonths()` за пределы цикла
 
   ```csharp
   // было: LoadExistingMonths() вызывается N раз (по разу на каждый месяц)
@@ -112,7 +112,7 @@
 
 > Прямой вызов `Directory.GetFiles` в сервисе нарушает DIP — `IDayRepository.GetDayFilePaths` уже существует.
 
-- [ ] **6.1** Добавить `IDayRepository` в конструктор `MonthStatisticsService`
+- [x] **6.1** Добавить `IDayRepository` в конструктор `MonthStatisticsService`
   ```csharp
   // было:
   public MonthStatisticsService(IJsonFileStorage storage)
@@ -121,9 +121,9 @@
   public MonthStatisticsService(IJsonFileStorage storage, IDayRepository dayRepository)
   ```
 
-- [ ] **6.2** Заменить `Directory.GetFiles(folderPath, "*.json")` на `_dayRepository.GetDayFilePaths(folderPath)`
+- [x] **6.2** Заменить `Directory.GetFiles(folderPath, "*.json")` на `_dayRepository.GetDayFilePaths(folderPath)`
 
-- [ ] **6.3** Зарегистрировать обновлённый конструктор в `App.xaml.cs` (DI подхватит автоматически при наличии регистрации `IDayRepository`)
+- [x] **6.3** Зарегистрировать обновлённый конструктор в `App.xaml.cs` (DI подхватит автоматически при наличии регистрации `IDayRepository`)
 
 ---
 
@@ -132,42 +132,15 @@
 > `MonthStatisticsViewModel.ExportExcel` и `YearStatisticsViewModel.ExportToExcel` идентичны по структуре:
 > построить путь → `Directory.CreateDirectory` → `await export` → открыть файл → показать сообщения.
 
-- [ ] **7.1** Создать `ExportHelper` (приватный метод или `static` хелпер в `Presentation/ViewModels/`)
+- [x] **7.1** Создать `ExportHelper` (приватный метод или `static` хелпер в `Presentation/ViewModels/`)
 
-  ```csharp
-  // Сигнатура:
-  private async Task RunExportAsync(
-      string filePath,
-      Func<Task> exportAction)
-  {
-      Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
-      try
-      {
-          await exportAction();
-          if (_settings.Current.OpenExcelAfterExport)
-              _fileLauncher.OpenIfExists(filePath);
-          _messages.ShowInfo(_localization["Excel_Successful_Preservation"],
-                             _localization["Excel_ExportCompleted"]);
-      }
-      catch (IOException)
-      {
-          _messages.ShowError(BuildIoErrorText(), _localization["Excel_ExportCompleted"]);
-      }
-      catch (Exception ex)
-      {
-          _messages.ShowError($"{_localization["Exel_Error_Export_2"]}\n\n{ex.Message}",
-                              _localization["Excel_ExportCompleted"]);
-      }
-  }
-  ```
-
-- [ ] **7.2** Упростить `ExportExcel` и `ExportToExcel` до вызова `RunExportAsync`
+- [x] **7.2** Упростить `ExportExcel` и `ExportToExcel` до вызова `RunExportAsync`
 
 ---
 
 ## Фаза 8 — Минорные улучшения
 
-- [ ] **8.1** `YearStatisticsViewModel.Title` — кэшировать `CultureInfo`
+- [x] **8.1** `YearStatisticsViewModel.Title` — кэшировать `CultureInfo`
   ```csharp
   // Title вызывается из биндинга при каждом обновлении.
   // CultureInfo — тяжёлый объект, пересоздавать не нужно.

@@ -56,48 +56,15 @@ namespace DutyPlanner.Presentation.ViewModels
 
         private async void ExportExcel()
         {
-            var exportFolder = Path.Combine(
-             AppContext.BaseDirectory,
-             _settings.Current.DefaultExportFolder);
-
-            Directory.CreateDirectory(exportFolder);
-
+            var exportFolder = Path.Combine(AppContext.BaseDirectory, _settings.Current.DefaultExportFolder);
             var culture = new CultureInfo(_settings.Current.Language);
             var monthName = culture.DateTimeFormat.GetMonthName(Data.Month);
+            var filePath = Path.Combine(exportFolder, $"{monthName}-{Data.Year}.xlsx");
 
-            var fileName = $"{monthName}-{Data.Year}.xlsx";
-            var filePath = Path.Combine(exportFolder, fileName);
-
-            try
-            {
-                await _excelExportService.ExportMonthStatisticsAsync(Data, filePath);
-
-                if (_settings.Current.OpenExcelAfterExport)
-                    _fileLauncher.OpenIfExists(filePath);
-
-                _messages.ShowInfo(
-                    $"{_localization["Excel_Successful_Preservation"]}",
-                    $"{_localization["Excel_ExportCompleted"]}");
-            }
-
-            catch (IOException)
-            {
-                _messages.ShowError(
-                    $"{_localization["Exel_Error_Export"]}\n\n" +
-                    $"{_localization["Excel_Strign_1"]}\n" +
-                    $"{_localization["Excel_Strign_2"]}\n" +
-                    $"{_localization["Excel_Strign_3"]}\n" +
-                    $"{_localization["Excel_Strign_4"]}\n\n" +
-                    $"{_localization["Excel_String_5"]}",
-                    $"{_localization["Excel_ExportCompleted"]}");
-            }
-            catch (Exception ex)
-            {
-                _messages.ShowError(
-                   $"{_localization["Exel_Error_Export_2"]}\n\n" + ex.Message,
-                    $"{_localization["Excel_ExportCompleted"]}");
-            }
-
+            await ExportHelper.RunExportAsync(
+                filePath,
+                () => _excelExportService.ExportMonthStatisticsAsync(Data, filePath),
+                _settings, _fileLauncher, _messages, _localization);
         }
 
 

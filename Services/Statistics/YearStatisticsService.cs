@@ -31,13 +31,13 @@ namespace DutyPlanner.Services
 
             var months = EnumerateMonths(start, end).ToList();
 
+            var existingMonths = _monthManagement.LoadExistingMonths()
+                .Select(m => (m.Year, m.Month))
+                .ToHashSet();
+
             foreach (var (year, month) in months)
             {
-                var monthInfo = _monthManagement
-                    .LoadExistingMonths()
-                    .FirstOrDefault(m => m.Year == year && m.Month == month);
-
-                if (monthInfo == null)
+                if (!existingMonths.Contains((year, month)))
                     continue;
 
                 var key = new YearMonth(year, month);
