@@ -8,7 +8,7 @@
         Title="SettingsDialog" Height="450" Width="400">
     <Grid>
         <StackPanel Margin="16">
-            <TextBlock Text="Папка данных"/>
+            <TextBlock Text="{DynamicResource Settings_DataFolder}"/>
             <StackPanel Margin="10">
 
 
@@ -36,7 +36,7 @@
                 IsChecked="{Binding Editable.OpenExcelAfterExport}"
                 Margin="5"/>
 
-            <Label Content="Месяц начала отчетного периода"/>
+            <Label Content="{DynamicResource Settings_YearStartMonth}"/>
 
             <ComboBox ItemsSource="{Binding Months}"
                       SelectedItem="{Binding SelectedMonth}"

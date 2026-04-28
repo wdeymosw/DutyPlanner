@@ -36,6 +36,7 @@
     <sys:String x:Key="Export_PdfSuccess">PDF-файл успешно сохранён.</sys:String>
     <sys:String x:Key="Export_Error">Ошибка экспорта</sys:String>
 
+    <sys:String x:Key="Settings_YearStartMonth">Месяц начала отчетного периода</sys:String>
     <sys:String x:Key="Settings_Language">Язык</sys:String>
     <sys:String x:Key="Language_ru">Русский</sys:String>
     <sys:String x:Key="Language_en">English</sys:String>

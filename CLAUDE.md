@@ -67,14 +67,26 @@ All data is stored as JSON files on disk:
 
 - `MainWindowsViewModel` — owns the `Pages` collection of `MonthPageViewModel` and all top-level commands.
 - `MonthPageViewModel` — one per loaded month; holds a collection of `DayViewModel`, dispatches through `IDayRepository`.
-- `DayViewModel` — one per day file; holds `ActiveUsers` / `ReserveUsers` as separate `ObservableCollection<DayUserViewModel>`. Saves asynchronously via `IDayRepository.SaveAsync`. Methods that call `SaveUsersAsync()` without try-catch (e.g., `AddFromSidebar`, `MoveUser`) are `async void` — handle exceptions carefully when modifying them.
+- `DayViewModel` — one per day file; holds `ActiveUsers` / `ReserveUsers` as separate `ObservableCollection<DayUserViewModel>`. Saves asynchronously via `IDayRepository.SaveAsync`. `AddFromSidebar`, `MoveUser`, and export methods are `async void` fire-and-forget — they intentionally swallow exceptions with try/catch to prevent UI thread crashes. If the save fails silently, use `IMessageService` to surface the error rather than letting the exception propagate.
 - `SidebarUsersViewModel` — left-panel user list; drag source for adding users to days.
 
-Commands use `LambdaCommand` / `CommandBase` from `Presentation/Commands/`. Drag-and-drop behavior is in `Presentation/Behaviors/`.
+**ViewModel base class** (`Presentation/ViewModels/Base/ViewModel.cs`) provides `Set<T>(ref field, value)` for property change notification — always use this instead of calling `OnPropertyChanged` manually.
+
+**LambdaCommand** has three overloads — parameterless, `object?`-parameter, and generic `LambdaCommand<T>` for strongly-typed parameters. Optional `canExecute` predicate passed in constructor; call `RaiseCanExecuteChanged()` when its conditions change.
+
+**BaseDialogViewModel** (`Presentation/ViewModels/Base/`) provides `OkCommand`, `CancelCommand`, and `RequestClose` event. New dialogs should inherit from it and implement `CanOk()`.
+
+**Drag-and-drop**: `DragSourceBehavior` (static attached) starts `DragDrop.DoDragDrop()` from ListBox items. `DragTargetBehavior` drops onto a day panel and calls `DayViewModel.OnDrop(data, placement)` — placement is read from the target element's `Tag` property (`"Reserve"` = reserve slot). `OnDrop` is polymorphic: `UserViewModel` from the sidebar adds a new user; `DayUserViewModel` from within a day moves between Active/Reserve.
+
+**InstanceId vs. domain Id**: `DayUserViewModel`, `UserViewModel`, and `DayUserDto` all carry both a domain `Id`/`UserID` (stable across saves) and a `InstanceId` (unique per ViewModel instance). Use `InstanceId` to track whether a user slot was removed and re-added (even with the same user), not for identity comparisons.
+
+**`DayViewModel.ActiveUsers` / `ReserveUsers`** are `ObservableCollection` projections of an internal `_users` list (the single source of truth). When moving a user between placements, update `_users` first, then rebuild both collections.
 
 ### Localization
 
-Three languages: Russian (`ru`), Ukrainian (`uk`), English (`en`). Resource dictionaries live in `Presentation/Resources/Localization/`. `ILocalizationService` swaps dictionaries at runtime and broadcasts `LanguageChanged`. Access strings via `_localization["Key"]` — missing keys return `!Key!`. Do not hardcode Russian text in services or infrastructure; always use localization keys.
+Three languages: Russian (`ru`), Ukrainian (`uk`), English (`en`). Resource dictionaries live in `Presentation/Resources/Localization/`. `ILocalizationService` swaps the entire `ResourceDictionary` at runtime and broadcasts `LanguageChanged`. Access strings via `_localization["Key"]` — missing keys return `!Key!`. Do not hardcode Russian text in services or infrastructure; always use localization keys.
+
+When applying a language, all four `CultureInfo` properties must be set (`CurrentCulture`, `CurrentUICulture`, `DefaultThreadCurrentCulture`, `DefaultThreadCurrentUICulture`) — missing any one of them breaks calendar controls and date formatting.
 
 ### Key Dependencies
 
