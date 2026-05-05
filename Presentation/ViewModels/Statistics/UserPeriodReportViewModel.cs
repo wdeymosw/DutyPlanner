@@ -6,7 +6,7 @@ using DutyPlanner.Presentation.ViewModels.Base;
 using DutyPlanner.Services;
 using System.Globalization;
 
-namespace DutyPlanner.Presentation.ViewModels
+namespace DutyPlanner.Presentation.ViewModels.Statistics
 {
     public sealed class UserPeriodReportViewModel : ViewModel, IRequestCloseViewModel
     {

@@ -88,7 +88,7 @@ namespace DutyPlanner.Presentation.ViewModels
             BeginEdit,
             EndEdit,
             RemoveUser,
-            showReport: u => _dialogService.ShowUserPeriodReport(u.Id, u.Name)
+            showReport: u => _dialogService.ShowUserPeriodReport(u.Id)
         );
 
         private void RemoveUser(UserViewModel user)

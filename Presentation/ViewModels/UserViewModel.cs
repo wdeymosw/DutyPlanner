@@ -6,7 +6,7 @@ namespace DutyPlanner.Presentation.ViewModels
 {
     public class UserViewModel : ViewModel
     {
-        public Guid InstancedId { get; }
+        public Guid InstanceId { get; }
         public Guid Id { get; }   // мастер-Id
 
         private string _name;
@@ -51,7 +51,7 @@ namespace DutyPlanner.Presentation.ViewModels
         Action<UserViewModel> showReport)
         {
             Id = id;
-            InstancedId = Guid.NewGuid();
+            InstanceId = Guid.NewGuid();
             _name = name;
             _hours = hours;
 

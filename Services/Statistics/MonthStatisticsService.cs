@@ -34,7 +34,7 @@ namespace DutyPlanner.Services
                     {
                         row = new MonthStatisticsRowDto
                         {
-                            UserId = u.UserID,          // agregation on UserID
+                            UserId = u.UserID,
                             UserName = u.Name ?? "—"
                         };
                         rows[u.UserID] = row;

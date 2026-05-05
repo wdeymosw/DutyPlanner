@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using DutyPlanner.Infrastructure.Settings;
 using DutyPlanner.Presentation.ViewModels;
+using DutyPlanner.Presentation.ViewModels.Statistics;
 using DutyPlanner.Presentation.Windows;
 using System.Windows;
 
@@ -102,7 +103,7 @@ namespace DutyPlanner.Services
         }
 
 
-        public void ShowUserPeriodReport(Guid userId, string userName)
+        public void ShowUserPeriodReport(Guid userId)
         {
             var yearPeriodService = _services.GetRequiredService<DutyPlanner.Services.Statistics.IYearPeriodService>();
             var yearStatsService  = _services.GetRequiredService<IYearStatisticsService>();

@@ -5,7 +5,6 @@ using DutyPlanner.Models;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using System.Globalization;
 using System.IO;
 
 namespace DutyPlanner.Services
@@ -24,6 +23,7 @@ namespace DutyPlanner.Services
             _localization = localization;
             _settings = settings;
             _fileLauncher = fileLauncher;
+            QuestPDF.Settings.License = LicenseType.Community;
         }
 
         public Task ExportAsync(UserPeriodReportPdfDto dto)
@@ -31,8 +31,6 @@ namespace DutyPlanner.Services
 
         private void Export(UserPeriodReportPdfDto dto)
         {
-            QuestPDF.Settings.License = LicenseType.Community;
-
             var exportFolder = Path.Combine(
                 AppContext.BaseDirectory,
                 _settings.Current.DefaultExportFolder);
@@ -45,7 +43,6 @@ namespace DutyPlanner.Services
                 exportFolder,
                 $"Report_{safeName}_{dto.PeriodStart:yyyyMM}-{dto.PeriodEnd:yyyyMM}.pdf");
 
-            var culture = new CultureInfo(_localization.CurrentLanguage);
             var isDeficient = dto.TotalHours < dto.MinimumHours;
             var hoursToNorm = Math.Max(0, dto.MinimumHours - dto.TotalHours);
 

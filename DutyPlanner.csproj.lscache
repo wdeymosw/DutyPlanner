@@ -67,7 +67,6 @@ Infrastructure/FileStorage/
  IFileStorage.cs
 Infrastructure/JsonFileStorage/
  DayUserDtoConverter.cs
- DayUserListConverter.cs
  IJsonFileStorage.cs
  JsonFileStorage.cs
 Infrastructure/Localization/
