@@ -171,7 +171,8 @@ namespace DutyPlanner.Presentation.ViewModels
                     _monthService.GetFolderPath(m.Year, m.Month),
                     _dialogService,
                     _localization,
-                    _dayRepository));
+                    _dayRepository,
+                    _settingsService));
             }
 
             RestoreLastPage();
@@ -199,7 +200,8 @@ namespace DutyPlanner.Presentation.ViewModels
                 _monthService.GetFolderPath(m.Year, m.Month),
                 _dialogService,
                 _localization,
-                _dayRepository);
+                _dayRepository,
+                _settingsService);
 
             vm.CreateDefaultDays();
 
