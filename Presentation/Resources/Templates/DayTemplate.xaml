@@ -79,7 +79,8 @@
                                                      Width="20"
                                                      Height="Auto"
                                                      HorizontalContentAlignment="Center"
-                                                     VerticalContentAlignment="Center"/>
+                                                     VerticalContentAlignment="Center"
+                                                     beh:NumericInputBehavior.IsEnabled="True"/>
                                             <Button Content="✕"
                                                     Style="{StaticResource PrimaryRevmoveSyle}"
                                                     FontSize="8"
@@ -129,7 +130,8 @@
                                                      Width="20"
                                                      Height="Auto"
                                                      HorizontalContentAlignment="Center"
-                                                     VerticalContentAlignment="Center"/>
+                                                     VerticalContentAlignment="Center"
+                                                     beh:NumericInputBehavior.IsEnabled="True"/>
                                             <Button Content="✕"
                                                     FontSize="8"
                                                     Style="{StaticResource PrimaryRevmoveSyle}"
