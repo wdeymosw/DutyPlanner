@@ -21,7 +21,7 @@ namespace DutyPlanner.Presentation.ViewModels
         public int Hours
         {
             get => _hours;
-            set => Set(ref _hours, value);
+            set => Set(ref _hours, Math.Clamp(value, 1, 24));
         }
         #endregion
 

@@ -101,6 +101,7 @@ namespace DutyPlanner.Presentation.ViewModels
                 Placement = placement
             };
 
+            SubscribeUser(vm);
             _users.Add(vm);
 
             if (placement == DayUserPlacement.Active)
@@ -141,7 +142,7 @@ namespace DutyPlanner.Presentation.ViewModels
             if (user == null)
                 return;
 
-            // удалить из хранилища
+            UnsubscribeUser(user);
             _users.Remove(user);
 
             //  удалить из UI
@@ -158,6 +159,9 @@ namespace DutyPlanner.Presentation.ViewModels
         /// </summary>
         private void Load()
         {
+            foreach (var u in _users)
+                UnsubscribeUser(u);
+
             ActiveUsers.Clear();
             ReserveUsers.Clear();
             _users.Clear();
@@ -168,6 +172,7 @@ namespace DutyPlanner.Presentation.ViewModels
             foreach (var dto in dayFile.Users)
             {
                 var user = new DayUserViewModel(dto);
+                SubscribeUser(user);
                 _users.Add(user);
 
                 if (dto.Placement == DayUserPlacement.Active)
@@ -175,6 +180,18 @@ namespace DutyPlanner.Presentation.ViewModels
                 else
                     ReserveUsers.Add(user);
             }
+        }
+
+        private void SubscribeUser(DayUserViewModel vm)
+            => vm.PropertyChanged += OnUserPropertyChanged;
+
+        private void UnsubscribeUser(DayUserViewModel vm)
+            => vm.PropertyChanged -= OnUserPropertyChanged;
+
+        private void OnUserPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(DayUserViewModel.Hours))
+                RestartSaveTimer();
         }
 
         /// <summary>
