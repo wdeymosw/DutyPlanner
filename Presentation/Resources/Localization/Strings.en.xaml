@@ -72,4 +72,16 @@
     <sys:String x:Key="Excel_Strign_4">• disk unavailable</sys:String>
     <sys:String x:Key="Excel_String_5">Close the file and try again.</sys:String>
 
+    <!-- User period report -->
+    <sys:String x:Key="Settings_MinimumHours">Minimum hours per period</sys:String>
+    <sys:String x:Key="Sidebar_ShowReport">Period report</sys:String>
+    <sys:String x:Key="UserReport_Period">Period</sys:String>
+    <sys:String x:Key="UserReport_Month">Month</sys:String>
+    <sys:String x:Key="UserReport_Hours">Hours</sys:String>
+    <sys:String x:Key="UserReport_Total">Total</sys:String>
+    <sys:String x:Key="UserReport_MinNorm">Norm</sys:String>
+    <sys:String x:Key="UserReport_Remaining">To norm</sys:String>
+    <sys:String x:Key="UserReport_NormDone">Norm achieved</sys:String>
+    <sys:String x:Key="UserReport_ExportPdf">Export to PDF</sys:String>
+
 </ResourceDictionary>

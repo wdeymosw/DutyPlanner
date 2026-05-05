@@ -1,5 +1,4 @@
 ﻿using DutyPlanner.Domain.Repositories;
-using DutyPlanner.Infrastructure.JsonFileStorage;
 using DutyPlanner.Models;
 using DutyPlanner.Models.Dto;
 using System.IO;
@@ -8,12 +7,10 @@ namespace DutyPlanner.Services
 {
     public sealed class MonthStatisticsService : IMonthStatisticsService
     {
-        private readonly IJsonFileStorage _storage;
         private readonly IDayRepository _dayRepository;
 
-        public MonthStatisticsService(IJsonFileStorage storage, IDayRepository dayRepository)
+        public MonthStatisticsService(IDayRepository dayRepository)
         {
-            _storage = storage;
             _dayRepository = dayRepository;
         }
 
@@ -28,7 +25,7 @@ namespace DutyPlanner.Services
                 if (!TryParseDay(file, year, month, out var date))
                     continue;
 
-                var users = (_storage.Load<List<DayUserDto>>(file) ?? [])
+                var users = _dayRepository.Load(file).Users
                     .Where(u => u.Placement == DayUserPlacement.Active);
 
                 foreach (var u in users)

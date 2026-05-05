@@ -64,7 +64,17 @@ namespace DutyPlanner.Presentation.ViewModels
             }
         }
 
-
+        private string _minimumHoursText;
+        public string MinimumHoursText
+        {
+            get => _minimumHoursText;
+            set
+            {
+                _minimumHoursText = value;
+                OnPropertyChanged();
+                RaiseOkCanExecuteChanged();
+            }
+        }
 
 
         #region Commands
@@ -93,6 +103,7 @@ namespace DutyPlanner.Presentation.ViewModels
                 .ToList();
 
             _selectedMonth = Months.First(m => m.Month == Editable.YearStartMonth);
+            _minimumHoursText = Editable.MinimumHours.ToString();
         }
 
         protected override bool CanOk()
@@ -100,6 +111,8 @@ namespace DutyPlanner.Presentation.ViewModels
             if (string.IsNullOrWhiteSpace(Editable.DataFolderPath)) return false;
 
             if (string.IsNullOrWhiteSpace(Editable.Language)) return false;
+
+            if (!int.TryParse(MinimumHoursText, out var v) || v < 0) return false;
 
             return true;
         }
@@ -130,6 +143,7 @@ namespace DutyPlanner.Presentation.ViewModels
             target.YearStartMonth = Editable.YearStartMonth;
             target.LastOpenedYear = Editable.LastOpenedYear;
             target.LastOpenedMonth = Editable.LastOpenedMonth;
+            target.MinimumHours = int.Parse(MinimumHoursText);
 
             _settings.Save();
         }
@@ -145,7 +159,8 @@ namespace DutyPlanner.Presentation.ViewModels
                 OpenExcelAfterExport = source.OpenExcelAfterExport,
                 YearStartMonth = source.YearStartMonth,
                 LastOpenedYear = source.LastOpenedYear,
-                LastOpenedMonth = source.LastOpenedMonth
+                LastOpenedMonth = source.LastOpenedMonth,
+                MinimumHours = source.MinimumHours
             };
         }
 

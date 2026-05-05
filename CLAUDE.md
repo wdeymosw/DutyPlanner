@@ -53,6 +53,10 @@ Migration target: move `Models/` into `Domain/`/`Application/` and `Services/` i
 1. Implementing `SqliteUserRepository : IUserRepository` and `SqliteDayRepository : IDayRepository`
 2. Changing two lines in `App.xaml.cs`
 
+### Services
+
+`UserService` (legacy `Services/`) wraps `IUserRepository` with an **in-memory cache** — it loads the user list once and keeps mutations in memory, flushing to the repository on each write. If you add or remove a user and the sidebar doesn't reflect it, ensure all callers go through `UserService` rather than `IUserRepository` directly.
+
 ### Data Persistence
 
 All data is stored as JSON files on disk:
@@ -74,7 +78,7 @@ All data is stored as JSON files on disk:
 
 **LambdaCommand** has three overloads — parameterless, `object?`-parameter, and generic `LambdaCommand<T>` for strongly-typed parameters. Optional `canExecute` predicate passed in constructor; call `RaiseCanExecuteChanged()` when its conditions change.
 
-**BaseDialogViewModel** (`Presentation/ViewModels/Base/`) provides `OkCommand`, `CancelCommand`, and `RequestClose` event. New dialogs should inherit from it and implement `CanOk()`.
+**BaseDialogViewModel** (`Presentation/ViewModels/Base/`) provides `OkCommand`, `CancelCommand`, and `RequestClose` event. New dialogs should inherit from it and implement `CanOk()`; call `RaiseOkCanExecuteChanged()` whenever the conditions that affect `CanOk()` change.
 
 **Drag-and-drop**: `DragSourceBehavior` (static attached) starts `DragDrop.DoDragDrop()` from ListBox items. `DragTargetBehavior` drops onto a day panel and calls `DayViewModel.OnDrop(data, placement)` — placement is read from the target element's `Tag` property (`"Reserve"` = reserve slot). `OnDrop` is polymorphic: `UserViewModel` from the sidebar adds a new user; `DayUserViewModel` from within a day moves between Active/Reserve.
 
@@ -87,6 +91,8 @@ All data is stored as JSON files on disk:
 Three languages: Russian (`ru`), Ukrainian (`uk`), English (`en`). Resource dictionaries live in `Presentation/Resources/Localization/`. `ILocalizationService` swaps the entire `ResourceDictionary` at runtime and broadcasts `LanguageChanged`. Access strings via `_localization["Key"]` — missing keys return `!Key!`. Do not hardcode Russian text in services or infrastructure; always use localization keys.
 
 When applying a language, all four `CultureInfo` properties must be set (`CurrentCulture`, `CurrentUICulture`, `DefaultThreadCurrentCulture`, `DefaultThreadCurrentUICulture`) — missing any one of them breaks calendar controls and date formatting.
+
+`LocalizationValidator.Validate()` runs at startup and checks that all three resource dictionaries contain the same set of keys. When adding a new localization key, add it to all three files or the validator will throw.
 
 ### Key Dependencies
 

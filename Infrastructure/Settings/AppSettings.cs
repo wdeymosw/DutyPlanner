@@ -15,5 +15,7 @@ namespace DutyPlanner.Infrastructure.Settings
         public int? LastOpenedMonth { get; set; }
 
         public int YearStartMonth { get; set; } = 1; // 1–12
+
+        public int MinimumHours { get; set; } = 72;
     }
 }

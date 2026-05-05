@@ -1,0 +1,202 @@
+<Window x:Class="DutyPlanner.Presentation.Windows.UserPeriodReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Style="{StaticResource AppWindowStyle}"
+        Title="{Binding Title}" Height="600" Width="420">
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0"
+                Margin="3"
+                Background="{StaticResource WindowShadowBrush}"
+                CornerRadius="8"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="2">
+            <Border Background="{StaticResource BackgroundBrushLight}"
+                    CornerRadius="8"
+                    Padding="10">
+                <StackPanel>
+                    <TextBlock Text="{Binding Title}"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource ButtonFontColorBrush}"
+                               TextWrapping="Wrap"/>
+                    <TextBlock HorizontalAlignment="Center"
+                               Margin="0,4,0,0">
+                        <Run Text="{DynamicResource UserReport_Period}"/>
+                        <Run Text=": "/>
+                        <Run Text="{Binding PeriodStart, StringFormat=dd.MM.yyyy, Mode=OneWay}"/>
+                        <Run Text=" — "/>
+                        <Run Text="{Binding PeriodEnd, StringFormat=dd.MM.yyyy, Mode=OneWay}"/>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </Border>
+
+        <!-- Content -->
+        <Border Grid.Row="1"
+                Margin="3"
+                Background="{StaticResource WindowShadowBrush}"
+                CornerRadius="8"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="2">
+            <Border Background="{StaticResource BackgroundBrushLight}"
+                    CornerRadius="8"
+                    Padding="8">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+
+                        <!-- Column headers -->
+                        <Grid Margin="0,0,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="{DynamicResource UserReport_Month}"
+                                       FontWeight="Bold"/>
+                            <TextBlock Grid.Column="1"
+                                       Text="{DynamicResource UserReport_Hours}"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"/>
+                        </Grid>
+
+                        <Separator Margin="0,2,0,4"/>
+
+                        <!-- Month rows -->
+                        <ItemsControl ItemsSource="{Binding MonthRows}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="80"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding MonthName}"/>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding Hours}"
+                                                   HorizontalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Separator Margin="0,6"/>
+
+                        <!-- Total -->
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="{DynamicResource UserReport_Total}"
+                                       FontWeight="Bold">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="Green"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsDeficient}" Value="True">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding TotalHours}"
+                                       HorizontalAlignment="Center"
+                                       FontWeight="Bold">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="Green"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsDeficient}" Value="True">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+
+                        <Separator Margin="0,6"/>
+
+                        <!-- Norm -->
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="{DynamicResource UserReport_MinNorm}"/>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding MinimumHours}"
+                                       HorizontalAlignment="Center"/>
+                        </Grid>
+
+                        <!-- Hours to norm (visible only when deficient) -->
+                        <Grid Margin="0,2"
+                              Visibility="{Binding IsDeficient, Converter={StaticResource BoolToVisibility}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="{DynamicResource UserReport_Remaining}"
+                                       Foreground="Red"/>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding HoursToNorm}"
+                                       HorizontalAlignment="Center"
+                                       Foreground="Red"/>
+                        </Grid>
+
+                        <!-- Norm done (visible only when not deficient) -->
+                        <TextBlock Text="{DynamicResource UserReport_NormDone}"
+                                   Foreground="Green"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,4"
+                                   Visibility="{Binding IsDeficient, Converter={StaticResource BoolToVisibilityInverse}}"/>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Border>
+
+        <!-- Buttons -->
+        <Border Grid.Row="2"
+                Margin="3"
+                Background="{StaticResource WindowShadowBrush}"
+                CornerRadius="8"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="2">
+            <Border Background="{StaticResource BackgroundBrushLight}"
+                    CornerRadius="8"
+                    Padding="8">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Content="{DynamicResource UserReport_ExportPdf}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding ExportPdfCommand}"
+                            Margin="0,0,8,0"/>
+                    <Button Content="{DynamicResource Common_Close}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding CloseCommand}"/>
+                </StackPanel>
+            </Border>
+        </Border>
+
+    </Grid>
+</Window>

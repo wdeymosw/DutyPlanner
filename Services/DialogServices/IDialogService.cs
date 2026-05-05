@@ -23,6 +23,6 @@ namespace DutyPlanner.Services
 
         void ShowYearStatistics(DateTime start, DateTime end);
 
-
+        void ShowUserPeriodReport(Guid userId, string userName);
     }
 }

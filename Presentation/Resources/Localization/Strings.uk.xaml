@@ -75,7 +75,16 @@
     <sys:String x:Key="Excel_Strign_4">• диск недоступний</sys:String>
     <sys:String x:Key="Excel_String_5">Закрийте файл і спробуйте знову.</sys:String>
 
-
-
+    <!-- User period report -->
+    <sys:String x:Key="Settings_MinimumHours">Мінімум годин за період</sys:String>
+    <sys:String x:Key="Sidebar_ShowReport">Звіт за період</sys:String>
+    <sys:String x:Key="UserReport_Period">Період</sys:String>
+    <sys:String x:Key="UserReport_Month">Місяць</sys:String>
+    <sys:String x:Key="UserReport_Hours">Години</sys:String>
+    <sys:String x:Key="UserReport_Total">Всього</sys:String>
+    <sys:String x:Key="UserReport_MinNorm">Норма</sys:String>
+    <sys:String x:Key="UserReport_Remaining">До норми</sys:String>
+    <sys:String x:Key="UserReport_NormDone">Норму виконано</sys:String>
+    <sys:String x:Key="UserReport_ExportPdf">Експорт у PDF</sys:String>
 
 </ResourceDictionary>

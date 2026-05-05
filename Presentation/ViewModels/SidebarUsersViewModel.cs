@@ -10,6 +10,7 @@ namespace DutyPlanner.Presentation.ViewModels
     {
 
         private readonly IUserService _userService;
+        private readonly IDialogService _dialogService;
 
         public ObservableCollection<UserViewModel> Users { get; }
 
@@ -50,9 +51,10 @@ namespace DutyPlanner.Presentation.ViewModels
 
         #region Constructor
 
-        public SidebarUsersViewModel(IUserService userService)
+        public SidebarUsersViewModel(IUserService userService, IDialogService dialogService)
         {
             _userService = userService;
+            _dialogService = dialogService;
 
             Users = new ObservableCollection<UserViewModel>(
                 _userService.GetAll()
@@ -85,7 +87,8 @@ namespace DutyPlanner.Presentation.ViewModels
             user.Hours,
             BeginEdit,
             EndEdit,
-            RemoveUser
+            RemoveUser,
+            showReport: u => _dialogService.ShowUserPeriodReport(u.Id, u.Name)
         );
 
         private void RemoveUser(UserViewModel user)

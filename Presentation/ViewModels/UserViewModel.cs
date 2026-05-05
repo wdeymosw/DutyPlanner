@@ -38,7 +38,7 @@ namespace DutyPlanner.Presentation.ViewModels
         public LambdaCommand? BeginEditCommand { get; private set; }
         public LambdaCommand? EndEditCommand { get; private set; }
         public LambdaCommand? RemoveCommand { get; private set; }
-
+        public LambdaCommand? ShowReportCommand { get; private set; }
 
 
         public UserViewModel(
@@ -47,7 +47,8 @@ namespace DutyPlanner.Presentation.ViewModels
         int hours,
         Action<UserViewModel> beginEdit,
         Action<UserViewModel> endEdit,
-        Action<UserViewModel> remove)
+        Action<UserViewModel> remove,
+        Action<UserViewModel> showReport)
         {
             Id = id;
             InstancedId = Guid.NewGuid();
@@ -66,6 +67,10 @@ namespace DutyPlanner.Presentation.ViewModels
 
             RemoveCommand = new LambdaCommand(
                 () => remove(this)
+            );
+
+            ShowReportCommand = new LambdaCommand(
+                () => showReport(this)
             );
         }
 

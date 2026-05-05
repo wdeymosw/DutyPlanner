@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using DutyPlanner.Infrastructure.Settings;
 using DutyPlanner.Presentation.ViewModels;
 using DutyPlanner.Presentation.Windows;
 using System.Windows;
@@ -91,7 +92,7 @@ namespace DutyPlanner.Services
         {
             var statsService = _services.GetRequiredService<IYearStatisticsService>();
 
-            var data = statsService.BuildPeriod(start,end);
+            var data = statsService.BuildPeriod(start, end);
 
             var vm = ActivatorUtilities.CreateInstance<YearStatisticsViewModel>(
                 _services, data);
@@ -100,6 +101,22 @@ namespace DutyPlanner.Services
             ShowDialog(dialog, vm);
         }
 
+
+        public void ShowUserPeriodReport(Guid userId, string userName)
+        {
+            var yearPeriodService = _services.GetRequiredService<DutyPlanner.Services.Statistics.IYearPeriodService>();
+            var yearStatsService  = _services.GetRequiredService<IYearStatisticsService>();
+            var settingsService   = _services.GetRequiredService<ISettingsService>();
+
+            var (start, end) = yearPeriodService.GetPeriod(DateTime.Today.Year);
+            var data         = yearStatsService.BuildPeriod(start, end);
+            var minimumHours = settingsService.Current.MinimumHours;
+
+            var vm     = ActivatorUtilities.CreateInstance<UserPeriodReportViewModel>(
+                             _services, data, userId, minimumHours);
+            var dialog = CreateDialog<UserPeriodReportWindow>(vm);
+            ShowDialog(dialog, vm);
+        }
 
 
         // ===== HELPERS =====

@@ -59,6 +59,7 @@ namespace DutyPlanner
 
             services.AddSingleton<IExcelExportService, ExcelExportService>(); // For exporting data to Excel
             services.AddSingleton<IMonthReportService, PdfMonthReportService>();// For generating month reports in PDF format
+            services.AddSingleton<IUserPeriodReportPdfService, UserPeriodReportPdfService>();
 
 
             //viewModels
@@ -75,6 +76,7 @@ namespace DutyPlanner
             services.AddTransient<AddMonthDialog>();
             services.AddTransient<AddDayDialog>();
             services.AddTransient<SettingsDialog>();
+            services.AddTransient<UserPeriodReportWindow>();
 
 
 

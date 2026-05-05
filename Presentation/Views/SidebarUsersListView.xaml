@@ -123,6 +123,8 @@
                                               Command="{Binding BeginEditCommand}"/>
                                         <MenuItem Header="Save"
                                               Command="{Binding EndEditCommand}"/>
+                                        <MenuItem Header="{DynamicResource Sidebar_ShowReport}"
+                                              Command="{Binding ShowReportCommand}"/>
                                         <Separator/>
                                         <MenuItem Header="Remove"
                                               Command="{Binding RemoveCommand}"/>

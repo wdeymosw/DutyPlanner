@@ -66,7 +66,7 @@ Unit/Services/
 
 [metadataReferences]
 ../obj/Debug/net10.0-windows/ref/DutyPlanner.dll
-<DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.6/ref/net10.0/
+<DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.7/ref/net10.0/
  Microsoft.CSharp.dll
  Microsoft.VisualBasic.Core.dll
  Microsoft.Win32.Primitives.dll
@@ -231,7 +231,7 @@ Unit/Services/
  System.Xml.XmlSerializer.dll
  System.Xml.XPath.dll
  System.Xml.XPath.XDocument.dll
-<DOTNET>/packs/Microsoft.WindowsDesktop.App.Ref/10.0.6/ref/net10.0/
+<DOTNET>/packs/Microsoft.WindowsDesktop.App.Ref/10.0.7/ref/net10.0/
  Accessibility.dll
  Microsoft.VisualBasic.dll
  Microsoft.VisualBasic.Forms.dll
@@ -318,19 +318,19 @@ Unit/Services/
  xunit.extensibility.execution/2.9.3/lib/netstandard1.1/xunit.execution.dotnet.dll
 
 [analyzerReferences]
-<DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.6/analyzers/dotnet/cs/
+<DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.7/analyzers/dotnet/cs/
  Microsoft.Interop.ComInterfaceGenerator.dll
  Microsoft.Interop.JavaScript.JSImportGenerator.dll
  Microsoft.Interop.LibraryImportGenerator.dll
  Microsoft.Interop.SourceGeneration.dll
  System.Text.Json.SourceGeneration.dll
  System.Text.RegularExpressions.Generator.dll
-<DOTNET>/packs/Microsoft.WindowsDesktop.App.Ref/10.0.6/analyzers/dotnet/cs/
+<DOTNET>/packs/Microsoft.WindowsDesktop.App.Ref/10.0.7/analyzers/dotnet/cs/
  System.Windows.Forms.Analyzers.CodeFixes.CSharp.dll
  System.Windows.Forms.Analyzers.CSharp.dll
 <DOTNET>/
- packs/Microsoft.WindowsDesktop.App.Ref/10.0.6/analyzers/dotnet/System.Windows.Forms.Analyzers.dll
- sdk/10.0.202/Sdks/Microsoft.NET.Sdk/analyzers/
+ packs/Microsoft.WindowsDesktop.App.Ref/10.0.7/analyzers/dotnet/System.Windows.Forms.Analyzers.dll
+ sdk/10.0.203/Sdks/Microsoft.NET.Sdk/analyzers/
   Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
   Microsoft.CodeAnalysis.NetAnalyzers.dll
 <NUGET>/xunit.analyzers/1.18.0/analyzers/dotnet/cs/
@@ -338,5 +338,5 @@ Unit/Services/
  xunit.analyzers.fixes.dll
 
 [analyzerConfigFiles]
-<DOTNET>/sdk/10.0.202/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_10_default.globalconfig
+<DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_10_default.globalconfig
 obj/Debug/net10.0-windows/DutyPlanner.Tests.GeneratedMSBuildEditorConfig.editorconfig
