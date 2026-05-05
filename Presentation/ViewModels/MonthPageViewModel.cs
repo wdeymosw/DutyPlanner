@@ -60,7 +60,6 @@ namespace DutyPlanner.Presentation.ViewModels
             RemoveDayCommand = new LambdaCommand<DayViewModel>(RemoveDay);
 
             EnsureFolderExists();
-            CreateDefaultDays();
             LoadDays();
         }
 
